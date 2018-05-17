@@ -256,22 +256,11 @@ public class ExcelToXLSFO {
 			return attrib.toString();
 		}
 
-		/*
-		HAIR
-		DOTTED
-		DASH_DOT_DOT
-		DASH_DOT
-		DASHED
-		THIN
-		MEDIUM_DASH_DOT_DOT
-		SLANTED_DASH_DOT
-		MEDIUM_DASH_DOT
-		MEDIUM_DASHED
-		MEDIUM
-		THICK
-		DOUBLE
+		/**
+		 * ExcelのBorderStyleをXSL-FOのborder-styleに変換します。
+		 * @param style ExcelのBorderStyle。
+		 * @return XSL-FOのborder-style。
 		 */
-
 		private String getBorderStyle(final BorderStyle style) {
 			String ret = null;
 			if (style == BorderStyle.HAIR) {
@@ -304,7 +293,11 @@ public class ExcelToXLSFO {
 			return ret;
 		}
 
-		
+		/**
+		 * ExcelのBorderStyleをXSL-FOのborder-widthに変換します。
+		 * @param style ExcelのBorderStyle。
+		 * @return XSL-FOのborder-width。
+		 */
 		private String getBorderWidth(final BorderStyle style) {
 			String ret = null;
 			if (style == BorderStyle.HAIR) {
@@ -338,6 +331,12 @@ public class ExcelToXLSFO {
 		}
 
 		
+		/**
+		 * ボーダースタイルのアトリビュートを作成します。
+		 * @param attrib アトリビュートを追加する文字列バッファ。
+		 * @param prop top,bottom,left,rightのいずれかを指定。
+		 * @param style BorderStyle。
+		 */
 		private void getBorderStyleAttribute(final StringBuilder attrib, final String prop, final BorderStyle style) {
 			if (style != BorderStyle.NONE) {
 				attrib.append(" border-" + prop + "-style=\"" + this.getBorderStyle(style) +"\"");
@@ -345,6 +344,12 @@ public class ExcelToXLSFO {
 			}
 		}
 
+		/**
+		 * ボーダーの色アトリビュートを作成します。
+		 * @param attrib アトリビュートを追加する文字列バッファ。
+		 * @param prop top,bottom,left,rightのいずれかを指定。
+		 * @param color ボーダーの色。
+		 */
 		private void getBorderColorAttribute(final StringBuilder attrib, final String prop, final XSSFColor color) {
 			if (color != null) {
 				String cc = color.getARGBHex();
@@ -354,6 +359,10 @@ public class ExcelToXLSFO {
 			}
 		}
 		
+		/**
+		 * Border関連のアトリビュートを作成します。
+		 * @param attrib アトリビュートを追加する文字列バッファ。
+		 */
 		private void getBorderAttribute(final StringBuilder attrib) {
 			this.getBorderStyleAttribute(attrib, "top", this.style.getBorderTopEnum());
 			this.getBorderStyleAttribute(attrib, "bottom", this.style.getBorderBottomEnum());
