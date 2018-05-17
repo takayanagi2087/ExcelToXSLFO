@@ -8,6 +8,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.Row;
@@ -685,9 +686,9 @@ public class ExcelToXLSFO {
 	 */
 	private String getCellValue(final Cell cell) {
 		String value = "";
-		if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
+		if (cell.getCellTypeEnum() == CellType.STRING) {
 			value = cell.getStringCellValue();
-		} else if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
+		} else if (cell.getCellTypeEnum() == CellType.NUMERIC) {
 			double v  = cell.getNumericCellValue();
 			value = "" + v;
 		}
