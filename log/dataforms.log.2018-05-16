@@ -1,0 +1,5 @@
+2018-05-16 19:07:34,085 ERROR ExcelToXLSFO - 
+java.lang.NullPointerException
+	at exeltoxslfo.ExcelToXLSFO.getSheetInfo(ExcelToXLSFO.java:158)
+	at exeltoxslfo.ExcelToXLSFO.convert(ExcelToXLSFO.java:168)
+	at exeltoxslfo.ExcelToXLSFO.main(ExcelToXLSFO.java:181)

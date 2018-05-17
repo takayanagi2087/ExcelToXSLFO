@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fo:root xmlns:fo="http://www.w3.org/1999/XSL/Format" xml:lang="ja">
+	<fo:layout-master-set>
+		<fo:simple-page-master page-height="297mm" page-width="210mm" margin-top="10mm" margin-left="20mm" margin-right="20mm" margin-bottom="10mm" master-name="PageMaster">
+			<fo:region-body margin-top="20mm" margin-left="0mm" margin-right="0mm" margin-bottom="10mm"/>
+		</fo:simple-page-master>
+	<fo:layout-master-set>
+	<fo:page-sequence initial-page-number="1" master-reference="PageMaster" font-family="ＭＳ ゴシック" font-size="10pt">
+		<fo:flow flow-name="xsl-region-body">
+			<fo:block  space-before="1em" >
+				<fo:table inline-progression-dimension="156.75pt" table-layout="fixed">
+					<fo:table-column column-number="1" column-width="44.0pt" />
+					<fo:table-column column-number="2" column-width="112.75pt" />
+				<fo:table-body>
+					<fo:table-row>
+						<fo:table-cell >
+							<fo:block>ExcelからXSL-FOへの変換テスト</fo:block>
+						</fo:table-cell>
+						<fo:table-cell >
+						</fo:table-cell>
+					</fo:table-row>
+					<fo:table-row>
+						<fo:table-cell >
+						</fo:table-cell>
+						<fo:table-cell >
+						</fo:table-cell>
+					</fo:table-row>
+					<fo:table-row>
+						<fo:table-cell >
+							<fo:block>項目1</fo:block>
+						</fo:table-cell>
+						<fo:table-cell >
+							<fo:block></fo:block>
+						</fo:table-cell>
+					</fo:table-row>
+					<fo:table-row>
+						<fo:table-cell >
+							<fo:block>項目2</fo:block>
+						</fo:table-cell>
+						<fo:table-cell >
+							<fo:block>aaaa</fo:block>
+						</fo:table-cell>
+					</fo:table-row>
+					<fo:table-row>
+						<fo:table-cell >
+							<fo:block>項目3</fo:block>
+						</fo:table-cell>
+						<fo:table-cell >
+							<fo:block>漢字</fo:block>
+						</fo:table-cell>
+					</fo:table-row>
+				</fo:table-body>
+				</fo:table>
+			</fo:block>
+		</fo:flow>
+	</fo:page-sequence>
+</fo:root>

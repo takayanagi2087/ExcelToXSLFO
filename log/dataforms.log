@@ -1,0 +1,18 @@
+2018-05-17 11:57:25,684 ERROR ExcelToXLSFO - Cannot get a text value from a numeric cell
+java.lang.IllegalStateException: Cannot get a text value from a numeric cell
+	at org.apache.poi.xssf.usermodel.XSSFCell.typeMismatch(XSSFCell.java:888)
+	at org.apache.poi.xssf.usermodel.XSSFCell.getRichStringCellValue(XSSFCell.java:310)
+	at org.apache.poi.xssf.usermodel.XSSFCell.getStringCellValue(XSSFCell.java:261)
+	at exeltoxslfo.ExcelToXLSFO.getTableCellsXml(ExcelToXLSFO.java:365)
+	at exeltoxslfo.ExcelToXLSFO.getTableXml(ExcelToXLSFO.java:400)
+	at exeltoxslfo.ExcelToXLSFO.getXSLSO(ExcelToXLSFO.java:413)
+	at exeltoxslfo.ExcelToXLSFO.convert(ExcelToXLSFO.java:423)
+	at exeltoxslfo.ExcelToXLSFO.main(ExcelToXLSFO.java:437)
+2018-05-17 17:55:24,478 ERROR ExcelToXLSFO - 
+java.lang.NullPointerException
+	at exeltoxslfo.ExcelToXLSFO$CellInfo.getCellAttribute(ExcelToXLSFO.java:250)
+	at exeltoxslfo.ExcelToXLSFO.getTableCellsXml(ExcelToXLSFO.java:702)
+	at exeltoxslfo.ExcelToXLSFO.getTableXml(ExcelToXLSFO.java:755)
+	at exeltoxslfo.ExcelToXLSFO.getXSLFO(ExcelToXLSFO.java:778)
+	at exeltoxslfo.ExcelToXLSFO.convert(ExcelToXLSFO.java:793)
+	at exeltoxslfo.ExcelToXLSFO.main(ExcelToXLSFO.java:815)

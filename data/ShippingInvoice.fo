@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fo:root xmlns:fo="http://www.w3.org/1999/XSL/Format" xml:lang="ja">
+	<fo:layout-master-set>
+		<!--  A4用紙のサイズ設定 -->
+		<fo:simple-page-master page-height="297mm" page-width="210mm" margin-top="10mm" margin-left="20mm" margin-right="20mm" margin-bottom="10mm" master-name="PageMaster">
+			<fo:region-body margin-top="20mm" margin-left="0mm" margin-right="0mm" margin-bottom="10mm"/>
+		</fo:simple-page-master>
+	</fo:layout-master-set>
+	<fo:page-sequence initial-page-number="1" master-reference="PageMaster" font-family="ＭＳ ゴシック" font-size="10pt">
+		<fo:flow flow-name="xsl-region-body">
+			<fo:block  space-before="1em" >
+				<fo:table inline-progression-dimension="160mm" table-layout="fixed">
+					<fo:table-column column-number="1" column-width="40mm" />
+					<fo:table-column column-number="2" column-width="120mm" />
+					<fo:table-body>
+						<fo:table-row>
+							<fo:table-cell text-align="center" border-style="solid" border-width="0.2mm" background-color="#CCBB22">
+								<fo:block>出荷伝票番号</fo:block>
+							</fo:table-cell>
+							<fo:table-cell border-style="solid" border-width="0.2mm">
+								<fo:block>$shippingInvoiceNo</fo:block>
+							</fo:table-cell>
+						</fo:table-row>
+						<fo:table-row>
+							<fo:table-cell text-align="center" border-style="solid" border-width="0.2mm" background-color="#CCBB22">
+								<fo:block>得意先</fo:block>
+							</fo:table-cell>
+							<fo:table-cell border-style="solid" border-width="0.2mm">
+								<fo:block>$clientName($clientCode)</fo:block>
+							</fo:table-cell>
+						</fo:table-row>
+						<fo:table-row>
+							<fo:table-cell text-align="center" border-style="solid" border-width="0.2mm" background-color="#CCBB22">
+								<fo:block>工事</fo:block>
+							</fo:table-cell>
+							<fo:table-cell border-style="solid" border-width="0.2mm">
+								<fo:block>$constName($constCode)</fo:block>
+							</fo:table-cell>
+						</fo:table-row>
+						<fo:table-row>
+							<fo:table-cell text-align="center" border-style="solid" border-width="0.2mm" background-color="#CCBB22">
+								<fo:block>商品</fo:block>
+							</fo:table-cell>
+							<fo:table-cell border-style="solid" border-width="0.2mm">
+								<fo:block>$goodsName</fo:block>
+							</fo:table-cell>
+						</fo:table-row>
+						<fo:table-row>
+							<fo:table-cell text-align="center" border-style="solid" border-width="0.2mm" background-color="#CCBB22">
+								<fo:block>出荷量(t)</fo:block>
+							</fo:table-cell>
+							<fo:table-cell border-style="solid" border-width="0.2mm">
+								<fo:block>$amount</fo:block>
+							</fo:table-cell>
+						</fo:table-row>
+					</fo:table-body>
+				</fo:table>
+			</fo:block>
+		</fo:flow>
+	</fo:page-sequence>
+</fo:root>
