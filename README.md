@@ -1,4 +1,4 @@
-#dataforms.jar
+# ExcelToXSLFO
 
 ## Description
 dataforms.jarでpdfを出力したり、サーバから直接プリンターに出力したいという案件が発生。
