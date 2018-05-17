@@ -16,3 +16,13 @@ java.lang.NullPointerException
 	at exeltoxslfo.ExcelToXLSFO.getXSLFO(ExcelToXLSFO.java:778)
 	at exeltoxslfo.ExcelToXLSFO.convert(ExcelToXLSFO.java:793)
 	at exeltoxslfo.ExcelToXLSFO.main(ExcelToXLSFO.java:815)
+2018-05-17 23:29:03,051 ERROR ExcelToXLSFO - 
+java.lang.NullPointerException
+	at exeltoxslfo.ExcelToXLSFO$CellInfo.getBorderColorAttribute(ExcelToXLSFO.java:315)
+	at exeltoxslfo.ExcelToXLSFO$CellInfo.getBorderAttribute(ExcelToXLSFO.java:326)
+	at exeltoxslfo.ExcelToXLSFO$CellInfo.getCellAttribute(ExcelToXLSFO.java:253)
+	at exeltoxslfo.ExcelToXLSFO.getTableCellsXml(ExcelToXLSFO.java:794)
+	at exeltoxslfo.ExcelToXLSFO.getTableXml(ExcelToXLSFO.java:847)
+	at exeltoxslfo.ExcelToXLSFO.getXSLFO(ExcelToXLSFO.java:870)
+	at exeltoxslfo.ExcelToXLSFO.convert(ExcelToXLSFO.java:885)
+	at exeltoxslfo.ExcelToXLSFO.main(ExcelToXLSFO.java:907)

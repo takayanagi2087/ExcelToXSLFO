@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.CellType;
@@ -17,6 +18,7 @@ import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFFont;
 
@@ -248,10 +250,122 @@ public class ExcelToXLSFO {
 				this.getAlignmentAttribute(attrib);
 				this.getFontAttribute(attrib);
 				this.getBackgroundColorAttribute(attrib);
+				this.getBorderAttribute(attrib);
+				logger.debug("birder type=" + this.style.getBorderBottomEnum().name());
 			}
 			return attrib.toString();
 		}
 
+		/*
+		HAIR
+		DOTTED
+		DASH_DOT_DOT
+		DASH_DOT
+		DASHED
+		THIN
+		MEDIUM_DASH_DOT_DOT
+		SLANTED_DASH_DOT
+		MEDIUM_DASH_DOT
+		MEDIUM_DASHED
+		MEDIUM
+		THICK
+		DOUBLE
+		 */
+
+		private String getBorderStyle(final BorderStyle style) {
+			String ret = null;
+			if (style == BorderStyle.HAIR) {
+				ret = "dotted";
+			} else if (style == BorderStyle.DOTTED) {
+				ret = "dotted";
+			} else if (style == BorderStyle.DASH_DOT_DOT) {
+				ret = "dashed";
+			} else if (style == BorderStyle.DASH_DOT) {
+				ret = "dashed";
+			} else if (style == BorderStyle.DASHED) {
+				ret = "dashed";
+			} else if (style == BorderStyle.THIN) {
+				ret = "solid";
+			} else if (style == BorderStyle.MEDIUM_DASH_DOT_DOT) {
+				ret = "dashed";
+			} else if (style == BorderStyle.SLANTED_DASH_DOT) {
+				ret = "dashed";
+			} else if (style == BorderStyle.MEDIUM_DASH_DOT) {
+				ret = "dashed";
+			} else if (style == BorderStyle.MEDIUM_DASHED) {
+				ret = "dashed";
+			} else if (style == BorderStyle.MEDIUM) {
+				ret = "solid";
+			} else if (style == BorderStyle.THICK) {
+				ret = "solid";
+			} else if (style == BorderStyle.DOUBLE) {
+				ret = "double";
+			}
+			return ret;
+		}
+
+		
+		private String getBorderWidth(final BorderStyle style) {
+			String ret = null;
+			if (style == BorderStyle.HAIR) {
+				ret = "0.12mm";
+			} else if (style == BorderStyle.DOTTED) {
+				ret = "thin";
+			} else if (style == BorderStyle.DASH_DOT_DOT) {
+				ret = "thin";
+			} else if (style == BorderStyle.DASH_DOT) {
+				ret = "thin";
+			} else if (style == BorderStyle.DASHED) {
+				ret = "thin";
+			} else if (style == BorderStyle.THIN) {
+				ret = "thin";
+			} else if (style == BorderStyle.MEDIUM_DASH_DOT_DOT) {
+				ret = "medium";
+			} else if (style == BorderStyle.SLANTED_DASH_DOT) {
+				ret = "medium";
+			} else if (style == BorderStyle.MEDIUM_DASH_DOT) {
+				ret = "medium";
+			} else if (style == BorderStyle.MEDIUM_DASHED) {
+				ret = "medium";
+			} else if (style == BorderStyle.MEDIUM) {
+				ret = "medium";
+			} else if (style == BorderStyle.THICK) {
+				ret = "thick";
+			} else if (style == BorderStyle.DOUBLE) {
+				ret = "1.2mm";
+			}
+			return ret;
+		}
+
+		
+		private void getBorderStyleAttribute(final StringBuilder attrib, final String prop, final BorderStyle style) {
+			if (style != BorderStyle.NONE) {
+				attrib.append(" border-" + prop + "-style=\"" + this.getBorderStyle(style) +"\"");
+				attrib.append(" border-" + prop + "-width=\"" + this.getBorderWidth(style) +"\"");
+			}
+		}
+
+		private void getBorderColorAttribute(final StringBuilder attrib, final String prop, final XSSFColor color) {
+			if (color != null) {
+				String cc = color.getARGBHex();
+				if (cc != null) {
+					attrib.append(" " + prop + "=\"#" + cc.substring(2) +"\"");
+				}
+			}
+		}
+		
+		private void getBorderAttribute(final StringBuilder attrib) {
+			this.getBorderStyleAttribute(attrib, "top", this.style.getBorderTopEnum());
+			this.getBorderStyleAttribute(attrib, "bottom", this.style.getBorderBottomEnum());
+			this.getBorderStyleAttribute(attrib, "left", this.style.getBorderLeftEnum());
+			this.getBorderStyleAttribute(attrib, "right", this.style.getBorderRightEnum());
+			XSSFCellStyle style = (XSSFCellStyle) this.style;
+			this.getBorderColorAttribute(attrib, "border-top-color", style.getTopBorderXSSFColor());
+			this.getBorderColorAttribute(attrib, "border-bottom-color", style.getBottomBorderXSSFColor());
+			this.getBorderColorAttribute(attrib, "border-left-color", style.getLeftBorderXSSFColor());
+			this.getBorderColorAttribute(attrib, "border-right-color", style.getRightBorderXSSFColor());
+		}
+		
 		/**
 		 * 背景色のアトリビュートを取得します。
 		 * @param attrib 追加する文字列バッファ。
