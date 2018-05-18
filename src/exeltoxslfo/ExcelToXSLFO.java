@@ -35,12 +35,12 @@ import org.apache.poi.xssf.usermodel.XSSFShape;
  * 気に入らないところはXSL-FOをテキストエディタで修正する前提のツールです。
  * </pre>
  */
-public class ExcelToXLSFO {
+public class ExcelToXSLFO {
 
 	/**
 	 * Logger.
 	 */
-	private static Logger logger = Logger.getLogger(ExcelToXLSFO.class);
+	private static Logger logger = Logger.getLogger(ExcelToXSLFO.class);
 	
 	/**
 	 * Excel形式の入力ファイルのパス。
@@ -524,7 +524,7 @@ public class ExcelToXLSFO {
 		}
 
 		private String getFilesPath() {
-			String files = ExcelToXLSFO.this.getXslFoFile();
+			String files = ExcelToXSLFO.this.getXslFoFile();
 			return files;
 		}
 		
@@ -970,7 +970,7 @@ public class ExcelToXLSFO {
 	 * @param args コマンドライン引数。
 	 */
 	public static void main(final String[] args) {
-		ExcelToXLSFO conv = new ExcelToXLSFO();
+		ExcelToXSLFO conv = new ExcelToXSLFO();
 		conv.parseAargs(args);
 		try {
 			conv.convert();
