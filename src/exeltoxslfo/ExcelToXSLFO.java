@@ -13,6 +13,7 @@ import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.apache.poi.ss.usermodel.PrintSetup;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.VerticalAlignment;
@@ -886,15 +887,6 @@ public class ExcelToXSLFO {
 	 */
 	private static final String XML_ROOT_END = "</fo:root>\n";
 	
-	/**
-	 * A4縦用のページマスタ。
-	 */
-	private static final String PAGE_MASTER_A4 =
-			"	<fo:layout-master-set>\n" + 
-			"		<fo:simple-page-master page-height=\"297mm\" page-width=\"210mm\" margin-top=\"10mm\" margin-left=\"20mm\" margin-right=\"20mm\" margin-bottom=\"10mm\" master-name=\"PageMaster\">\n" + 
-			"			<fo:region-body margin-top=\"20mm\" margin-left=\"0mm\" margin-right=\"0mm\" margin-bottom=\"10mm\"/>\n" + 
-			"		</fo:simple-page-master>\n" + 
-			"	</fo:layout-master-set>\n"; 
 	
 	/**
 	 * ページの開始タグ。
@@ -1109,6 +1101,66 @@ public class ExcelToXSLFO {
 		return sb.toString();
 	}
 	
+	
+	/**
+	 * A4縦用のページマスタ。
+	 */
+	private static final String PAGE_MASTER =
+			"	<fo:layout-master-set>\n" + 
+			"		<fo:simple-page-master page-height=\"${width}\" page-width=\"${height}\" margin-top=\"0mm\" margin-left=\"0mm\" margin-right=\"0mm\" margin-bottom=\"0mm\" master-name=\"PageMaster\">\n" + 
+			"			<fo:region-body margin-top=\"${topMargin}pt\" margin-left=\"${leftMargin}pt\" margin-right=\"${rightMargin}pt\" margin-bottom=\"${bottomMargin}pt\"/>\n" + 
+			"		</fo:simple-page-master>\n" + 
+			"	</fo:layout-master-set>\n"; 
+
+	
+	/**
+	 * ページマスタを取得します。
+	 * @param height ページの高さ。
+	 * @param width ページの幅。
+	 * @param landscape 横置きフラグ。
+	 * @return ページマスタタグ。
+	 */
+	private String getPageMaster(final String height, final String width, final boolean landscape) {
+		String pageMaster = PAGE_MASTER;
+		if (landscape) {
+			pageMaster = pageMaster.replaceAll("\\$\\{width\\}", width);
+			pageMaster = pageMaster.replaceAll("\\$\\{height\\}", height);
+		} else {
+			pageMaster = pageMaster.replaceAll("\\$\\{width\\}", height);
+			pageMaster = pageMaster.replaceAll("\\$\\{height\\}", width);
+		}
+		return pageMaster;
+	}
+	
+	/**
+	 * ページマスタを取得します。
+	 * @param wb ワークブック。
+	 * @param sb ページマスタを追加する文字列バッファ。
+	 */
+	private void getPageMaster(final Workbook wb, final StringBuilder sb) {
+		Sheet sh = wb.getSheetAt(getSheetIndex());
+		String pageMaster = PAGE_MASTER;
+		logger.debug("paperSize=" + sh.getPrintSetup().getPaperSize());
+		if (sh.getPrintSetup().getPaperSize() == PrintSetup.A5_PAPERSIZE) {
+			pageMaster = this.getPageMaster("210mm", "148mm", sh.getPrintSetup().getLandscape());
+		} else if (sh.getPrintSetup().getPaperSize() == PrintSetup.A4_PAPERSIZE) {
+			pageMaster = this.getPageMaster("297mm", "210mm", sh.getPrintSetup().getLandscape());
+		} else if (sh.getPrintSetup().getPaperSize() == PrintSetup.A3_PAPERSIZE) {
+			pageMaster = this.getPageMaster("420mm", "297mm", sh.getPrintSetup().getLandscape());
+		} else {
+			pageMaster = this.getPageMaster("297mm", "210mm", sh.getPrintSetup().getLandscape());
+		}
+		double topMargin = sh.getMargin(Sheet.TopMargin) * 72;
+		double bottomMargin = sh.getMargin(Sheet.BottomMargin) * 72;
+		double leftMargin = sh.getMargin(Sheet.LeftMargin) * 72;
+		double rightMargin = sh.getMargin(Sheet.RightMargin) * 72;
+		pageMaster = pageMaster.replaceAll("\\$\\{topMargin\\}", "" + topMargin);
+		pageMaster = pageMaster.replaceAll("\\$\\{bottomMargin\\}", "" + bottomMargin);
+		pageMaster = pageMaster.replaceAll("\\$\\{leftMargin\\}", "" + leftMargin);
+		pageMaster = pageMaster.replaceAll("\\$\\{rightMargin\\}", "" + rightMargin);
+		sb.append(pageMaster);
+	}
+	
 	/**
 	 * XSL-FO形式のXMLを取得します。
 	 * @param wb ワークブック。
@@ -1118,7 +1170,7 @@ public class ExcelToXSLFO {
 	private String getXSLFO(final Workbook wb, final TableInfo tinfo) {
 		StringBuilder sb = new StringBuilder();
 		sb.append(XML_ROOT_BEGIN);
-		sb.append(PAGE_MASTER_A4);
+		this.getPageMaster(wb, sb);
 		Font f = wb.getFontAt((short) 0);
 		String pageBegin = PAGE_BEGIN;
 		pageBegin = pageBegin.replaceAll("\\$\\{fontName\\}", f.getFontName());
