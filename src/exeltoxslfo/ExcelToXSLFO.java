@@ -601,18 +601,12 @@ public class ExcelToXSLFO {
 				if (shape instanceof XSSFPicture) {
 					XSSFPicture pic = (XSSFPicture) shape;
 					XSSFClientAnchor  anc = (XSSFClientAnchor) pic.getAnchor();
-					logger.debug(shape.getShapeName() + ":" + anc.getRow1() + "," + anc.getCol1() + "," + anc.getRow2() + "," + anc.getCol2());
-					logger.debug(anc.getDx1() / Units.EMU_PER_POINT + "," + anc.getDx2() / Units.EMU_PER_POINT + "," 
-							+ anc.getDy1() / Units.EMU_PER_POINT + "," + anc.getDy2()/ Units.EMU_PER_POINT);
-//					String url = this.saveImage(pic);
 					double top = this.getTop(anc.getRow1()) + anc.getDy1() / Units.EMU_PER_POINT;
 					double left = this.getLeft(anc.getCol1()) + anc.getDx1() / Units.EMU_PER_POINT;
 					double bottom = this.getTop(anc.getRow2()) + anc.getDy2() / Units.EMU_PER_POINT;
 					double right = this.getLeft(anc.getCol2()) + anc.getDx2() / Units.EMU_PER_POINT;
-					
 					double height = bottom - top + 1;
 					double width = right - left + 1;
-//					logger.debug("img url=" + url);
 					this.imageList.add(new ImageInfo(top, left, height, width, pic.getPictureData()));
 				}
 			}
