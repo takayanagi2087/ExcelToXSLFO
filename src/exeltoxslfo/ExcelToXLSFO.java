@@ -623,7 +623,7 @@ public class ExcelToXLSFO {
 			List<Double> ret = new ArrayList<Double>();
 			for (int i = 0; i < cols; i++) {
 				// セル幅の計算はかなり適当
-				double w = sh.getColumnWidth(i) / 256.0 * (f.getFontHeightInPoints() * 0.6);
+				double w = sh.getColumnWidth(i) / 256.0 * (f.getFontHeightInPoints() * 0.56);
 				logger.debug("w=" + w);
 				ret.add(w);
 			}
