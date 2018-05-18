@@ -18,9 +18,15 @@ import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.poi.util.Units;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
+import org.apache.poi.xssf.usermodel.XSSFClientAnchor;
 import org.apache.poi.xssf.usermodel.XSSFColor;
+import org.apache.poi.xssf.usermodel.XSSFDrawing;
 import org.apache.poi.xssf.usermodel.XSSFFont;
+import org.apache.poi.xssf.usermodel.XSSFPicture;
+import org.apache.poi.xssf.usermodel.XSSFPictureData;
+import org.apache.poi.xssf.usermodel.XSSFShape;
 
 /**
  * Excelシートから、それらしいXSL-FOファイルを作成します。
@@ -251,7 +257,6 @@ public class ExcelToXLSFO {
 				this.getFontAttribute(attrib);
 				this.getBackgroundColorAttribute(attrib);
 				this.getBorderAttribute(attrib);
-				logger.debug("birder type=" + this.style.getBorderBottomEnum().name());
 			}
 			return attrib.toString();
 		}
@@ -380,12 +385,9 @@ public class ExcelToXLSFO {
 		 * @param attrib 追加する文字列バッファ。
 		 */
 		public void getBackgroundColorAttribute(final StringBuilder attrib) {
-			short colidx = this.style.getFillBackgroundColor();
-			logger.debug("background-color=" + colidx);
 			XSSFColor c = (XSSFColor) this.style.getFillForegroundColorColor();
 			if (c != null) {
 				String hexcolor = c.getARGBHex();
-				logger.debug("background-color hexcolor=" + hexcolor + ",index=" + c.getIndexed());
 				if (hexcolor != null) {
 					attrib.append(" background-color=\"#" + hexcolor.substring(2) + "\" ");
 				}
@@ -399,14 +401,12 @@ public class ExcelToXLSFO {
 		public void getFontAttribute(final StringBuilder attrib) {
 			int fidx = this.style.getFontIndex();
 			if (fidx > 0) {
-				logger.debug("fidx=" + fidx);
 				Font f = this.workbook.getFontAt((short) fidx);
 				attrib.append(" font-family=\"" + f.getFontName() + "\"");
 				attrib.append(" font-size=\"" + f.getFontHeightInPoints() + "pt\"");
 				XSSFFont xf = (XSSFFont) f;
 				XSSFColor color = xf.getXSSFColor();
 				String hexcolor = color.getARGBHex();
-				logger.debug("hexcolor=" + hexcolor);
 				attrib.append(" color=\"#" + hexcolor.substring(2) + "\"");
 				if (f.getBold()) {
 					attrib.append(" font-weight=\"bold\"");
@@ -483,7 +483,6 @@ public class ExcelToXLSFO {
 			Sheet sh = wb.getSheetAt(getSheetIndex());
 			int rows = this.getRows(sh);
 			int cols = this.getColums(sh);
-			logger.debug("rows=" + rows + ",cols=" + cols);
 			this.cellInfo = new CellInfo[rows][cols];
 			for (int r = 0; r < rows; r++) {
 				for (int c = 0; c < cols; c++) {
@@ -497,9 +496,42 @@ public class ExcelToXLSFO {
 			this.getSpanInfo(wb);
 			this.rowHeightList = this.getHeightList(wb, rows);
 			this.columnWidthList = this.getWidthList(wb, cols);
-			
+			XSSFDrawing drawing = (XSSFDrawing) sh.createDrawingPatriarch();
+			List<XSSFShape> shapeList = drawing.getShapes();
+			for (XSSFShape shape: shapeList) {
+				if (shape instanceof XSSFPicture) {
+					XSSFPicture pic = (XSSFPicture) shape;
+					XSSFClientAnchor  anc = (XSSFClientAnchor) pic.getAnchor();
+					logger.debug(shape.getShapeName() + ":" + anc.getRow1() + "," + anc.getCol1() + "," + anc.getRow1() + "," + anc.getCol1() + "," + anc.getDx1() / Units.EMU_PER_POINT + "," + anc.getDy1() / Units.EMU_PER_POINT + "," 
+							+ anc.getDx2() / Units.EMU_PER_POINT + "," + anc.getDy2()/ Units.EMU_PER_POINT);
+					XSSFPictureData data = pic.getPictureData();
+					byte[] img = data.getData();
+					try {
+						String type = data.getMimeType();
+						logger.debug("type=" + type);
+						FileOutputStream os = new FileOutputStream("/tmp/aaa." + type.replaceAll("image/", ""));
+						try {
+							os.write(img);
+						} finally {
+							os.close();
+						}
+					} catch (Exception e) {
+						logger.error(e.getMessage(), e);
+					}
+					
+				}
+			}
 		}
 
+		private String getFilesPath() {
+			String files = ExcelToXLSFO.this.getXslFoFile();
+			return files;
+		}
+		
+		private String saveImage(final XSSFPicture pic) throws Exception {
+			return null;
+		}
+		
 		/**
 		 * 指定されたセルを取得します。
 		 * @param sh シート。
@@ -524,17 +556,14 @@ public class ExcelToXLSFO {
 			Sheet sh = wb.getSheetAt(getSheetIndex());
 			int n = sh.getNumMergedRegions();
 			for (int i = 0; i < n; i++) {
-				logger.debug("mergedRegion=" + i);
 				CellRangeAddress rgn = sh.getMergedRegion(i);
 				int r0 = rgn.getFirstRow();
 				int c0 = rgn.getFirstColumn();
 				int rowSpan = rgn.getLastRow() - rgn.getFirstRow() + 1;
 				int colSpan = rgn.getLastColumn() - rgn.getFirstColumn() + 1;
-				logger.debug("cell(" + r0 + "," + c0 + ") rowspan=" + rowSpan + ",colspan=" + colSpan);
 				for (int r = r0; r <= rgn.getLastRow(); r++) {
 					for (int c = c0; c <= rgn.getLastColumn(); c++) {
 						this.getCellInfo(r, c).setHidden(true);
-						logger.debug("cell(" + r + "," + c + ") is hidden.");
 					}
 				}
 				this.getCellInfo(r0, c0).setRowSpan(rowSpan);
@@ -570,11 +599,9 @@ public class ExcelToXLSFO {
 		 */
 		private int getColums(final Sheet sh) {
 			int cols = 0;
-			logger.debug("first=" + sh.getFirstRowNum() + ",last=" + sh.getLastRowNum());
 			for (int i = sh.getFirstRowNum(); i <= sh.getLastRowNum(); i++) {
 				Row r = sh.getRow(i);
 				if (r != null) {
-					logger.debug("r.getLastCellNum()=" + r.getLastCellNum());
 					if (cols < r.getLastCellNum()) {
 						cols = r.getLastCellNum();
 					}
@@ -596,11 +623,9 @@ public class ExcelToXLSFO {
 				Row r = sh.getRow(i);
 				if (r != null) {
 					double h = r.getHeightInPoints();
-					logger.debug("h=" + h);
 					ret.add(h);
 				} else {
 					double h = sh.getDefaultRowHeightInPoints();
-					logger.debug("h=" + h);
 					ret.add(h);
 				}
 			}
@@ -618,13 +643,11 @@ public class ExcelToXLSFO {
 		 */
 		private List<Double> getWidthList(final Workbook wb, final int cols) {
 			Font f = wb.getFontAt((short) 0);
-			logger.debug("points=" + f.getFontHeightInPoints());
 			Sheet sh = wb.getSheetAt(getSheetIndex());
 			List<Double> ret = new ArrayList<Double>();
 			for (int i = 0; i < cols; i++) {
 				// セル幅の計算はかなり適当
 				double w = sh.getColumnWidth(i) / 256.0 * (f.getFontHeightInPoints() * 0.56);
-				logger.debug("w=" + w);
 				ret.add(w);
 			}
 			return ret;
@@ -927,10 +950,9 @@ public class ExcelToXLSFO {
 	 */
 	public String convert() throws Exception {
 		Workbook wb = this.getWorkbook();
-		logger.debug("wb sheet count=" + wb.getNumberOfSheets());
 		TableInfo tinfo = this.getTableInfo(wb);
 		String xml = this.getXSLFO(wb, tinfo);
-		logger.debug("so=" + xml);
+		logger.debug("XLS-SO:\n" + xml);
 		if (this.xslFoFile != null) {
 			FileOutputStream os = new FileOutputStream(this.xslFoFile);
 			try {
