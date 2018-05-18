@@ -10,17 +10,6 @@
 		</layout>
 	</appender>
 
-	<appender name="FILE" class="org.apache.log4j.DailyRollingFileAppender">
-		<param name="threshold" value="info" />
-		<param name="File" value="log/dataforms.log" />
-		<param name="Append" value="true" />
-		<param name="Encoding" value="utf-8" />
-		<param name="DatePattern" value="'.'yyyy-MM-dd" />
-		<layout class="org.apache.log4j.PatternLayout">
-			<param name="ConversionPattern" value="%d %5p %c{1} - %m%n" />
-		</layout>
-	</appender>
-
 	<category name="exeltoxslfo">
 		<priority value="debug" />
 	</category>
@@ -28,7 +17,6 @@
 	<!-- ********************** root定義 ***************************** -->
 	<root>
 		<priority value="info" />
-		<appender-ref ref="FILE" />
 		<appender-ref ref="STDOUT" />
 	</root>
 </log4j:configuration>

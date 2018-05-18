@@ -3,6 +3,7 @@ package exeltoxslfo;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -454,6 +455,99 @@ public class ExcelToXSLFO {
 			this.style = style;
 		}
 	}
+	
+	/**
+	 * 画像情報。
+	 *
+	 */
+	private class ImageInfo {
+		/**
+		 * 画像ファイルの上端の座標(pt)。
+		 */
+		private double top = 0;
+		/**
+		 * 画像ファイルの左端の座標(pt)。
+		 */
+		private double left = 0;
+		
+		/**
+		 * 画像の高さ(pt)。
+		 */
+		private double height = 0;
+		
+		/**
+		 * 画像の幅(pt)。
+		 */
+
+		private double width = 0;
+
+		/**
+		 * 画像データ。
+		 */
+		private XSSFPictureData imageData = null;
+		
+		/**
+		 * コンストラクタ。
+		 * @param top 画像の上端の位置(pt)。
+		 * @param left 画像の左端の位置(pt)。
+		 * @param height 画像の高さ(pt)。
+		 * @param width 画像の幅(pt)。
+		 * @param data 画像データ。
+		 */
+		public ImageInfo(final double top, final double left, final double height, final double width, final XSSFPictureData data) {
+			this.top = top;
+			this.left = left;
+			this.height = height;
+			this.width = width;
+			this.imageData = data;
+			logger.debug("ImageInfo:" + "," + top + "," + left + "," + height + "," + width);
+		}
+		
+		
+		
+		/**
+		 * 画像ファイルの上端の座標(pt)を取得します。
+		 * @return 画像ファイルの上端の座標(pt)。
+		 */
+		public double getTop() {
+			return top;
+		}
+		
+		/**
+		 * 画像ファイルの左端座標(pt)を取得します。
+		 * @return 画像ファイルの左端座標(pt)。
+		 */
+		public double getLeft() {
+			return left;
+		}
+
+		/**
+		 * 画像の高さ(pt)を取得します。
+		 * @return 画像の高さ(pt)。
+		 */
+		public double getHeight() {
+			return height;
+		}
+
+		/**
+		 * 画像の幅(pt)を取得します。
+		 * @return 画像の幅(pt)。
+		 */
+		public double getWidth() {
+			return width;
+		}
+		
+		/**
+		 * Base64形式の画像ソースを取得します。
+		 * @return 画像ソース。
+		 */
+		public String getImageSrc() {
+			String ret = "data:" + this.imageData.getMimeType() + ";base64, ";
+			byte [] img = this.imageData.getData();
+			String encoded = Base64.getEncoder().encodeToString(img);
+			return ret + encoded;
+		}
+	}
 
 	/**
 	 * Excelのテーブル構造を取得します。
@@ -474,12 +568,17 @@ public class ExcelToXSLFO {
 		 */
 		private CellInfo [][] cellInfo = null;
 		
+		/**
+		 * 画像情報。
+		 */
+		private List<ImageInfo> imageList = new ArrayList<ImageInfo>();
 		
 		/**
 		 * 指定されたワークブックのテーブル構造情報を作成します。
 		 * @param wb ワークブック。
+		 * @throws Exception 例外。
 		 */
-		public TableInfo(final Workbook wb) {
+		public TableInfo(final Workbook wb) throws Exception {
 			Sheet sh = wb.getSheetAt(getSheetIndex());
 			int rows = this.getRows(sh);
 			int cols = this.getColums(sh);
@@ -504,33 +603,89 @@ public class ExcelToXSLFO {
 					XSSFClientAnchor  anc = (XSSFClientAnchor) pic.getAnchor();
 					logger.debug(shape.getShapeName() + ":" + anc.getRow1() + "," + anc.getCol1() + "," + anc.getRow1() + "," + anc.getCol1() + "," + anc.getDx1() / Units.EMU_PER_POINT + "," + anc.getDy1() / Units.EMU_PER_POINT + "," 
 							+ anc.getDx2() / Units.EMU_PER_POINT + "," + anc.getDy2()/ Units.EMU_PER_POINT);
-					XSSFPictureData data = pic.getPictureData();
-					byte[] img = data.getData();
-					try {
-						String type = data.getMimeType();
-						logger.debug("type=" + type);
-						FileOutputStream os = new FileOutputStream("/tmp/aaa." + type.replaceAll("image/", ""));
-						try {
-							os.write(img);
-						} finally {
-							os.close();
-						}
-					} catch (Exception e) {
-						logger.error(e.getMessage(), e);
-					}
-					
+//					String url = this.saveImage(pic);
+					double top = this.getTop(anc.getRow1()) + anc.getDy1() / Units.EMU_PER_POINT;
+					double left = this.getLeft(anc.getCol1()) + anc.getDx1() / Units.EMU_PER_POINT;
+					double height = (anc.getDy2() - anc.getDy1()) / Units.EMU_PER_POINT;
+					double width = (anc.getDx2() - anc.getDx1()) / Units.EMU_PER_POINT;
+//					logger.debug("img url=" + url);
+					this.imageList.add(new ImageInfo(top, left, height, width, pic.getPictureData()));
 				}
 			}
 		}
 
-		private String getFilesPath() {
-			String files = ExcelToXSLFO.this.getXslFoFile();
-			return files;
+		
+		/**
+		 * 画像リストを取得します。
+		 * @return 画像リスト。
+		 */
+		public List<ImageInfo> getImageList() {
+			return imageList;
+		}
+
+		/**
+		 * 指定した行の上端座標(pt)を取得します。
+		 * @param row 行インデックス。
+		 * @return 上端座標(pt)。
+		 */
+		private double getTop(final int row) {
+			double ret = 0;
+			for (int i = 0; i < row; i++) {
+				Double h = this.rowHeightList.get(i);
+				ret += h;
+			}
+			return ret;
 		}
 		
-		private String saveImage(final XSSFPicture pic) throws Exception {
-			return null;
+		/**
+		 * 指定したセルの左端座標(pt)を取得します。
+		 * @param cell セルインデックス。
+		 * @return セルの左端座標(pt)。
+		 */
+		private double getLeft(final int cell) {
+			double ret = 0;
+			for (int i = 0; i < cell; i++) {
+				Double h = this.columnWidthList.get(i);
+				ret += h;
+			}
+			return ret;
 		}
+		
+		/**
+		 * 付属ファイルの保存ディレクトリを取得します。
+		 * @return 付属ファイルの保存ディレクトリ。
+		 */
+/*		private String getFilesPath() {
+			String files = ExcelToXSLFO.this.getXslFoFile() + ".files";
+			File filesdir = new File(files);
+			if (!filesdir.exists()) {
+				filesdir.mkdirs();
+			}
+			return files;
+		}*/
+		
+		/**
+		 * 画像ファイルを保存します。
+		 * @param pic 画像情報。
+		 * @return 画像ファイルの保存ファイル名。
+		 * @throws Exception 例外。
+		 */
+/*		private String saveImage(final XSSFPicture pic) throws Exception {
+			String filesdir = this.getFilesPath();
+			XSSFPictureData data = pic.getPictureData();
+			byte[] img = data.getData();
+			String type = data.getMimeType();
+			logger.debug("type=" + type);
+			String filename = pic.getShapeName() + "." + type.replaceAll("image/", "");
+			FileOutputStream os = new FileOutputStream(filesdir + File.separatorChar  + pic.getShapeName() + "." + type.replaceAll("image/", ""));
+			try {
+				os.write(img);
+			} finally {
+				os.close();
+			}
+			File dir = new File(filesdir);
+			return dir.getName() + "/" + filename;
+		}*/
 		
 		/**
 		 * 指定されたセルを取得します。
@@ -715,8 +870,9 @@ public class ExcelToXSLFO {
 	 * ワークブックのテーブル情報を取得します。
 	 * @param wb ワークブック。
 	 * @return テーブル情報。
+	 * @throws Exception 例外。
 	 */
-	private TableInfo getTableInfo(final Workbook wb) {
+	private TableInfo getTableInfo(final Workbook wb) throws Exception {
 		TableInfo ret = new TableInfo(wb);
 		return ret;
 	}
@@ -825,6 +981,7 @@ public class ExcelToXSLFO {
 	private static final String TABLE_CELL_BLOCK_END = 
 			"</fo:block>\n";
 	
+	
 	/**
 	 * セルの値を取得します。
 	 * @param cell セル。
@@ -923,6 +1080,38 @@ public class ExcelToXSLFO {
 	}
 	
 	/**
+	 * 画像位置指定ブロック開始。
+	 */
+	private static final String IMAGE_BLOCK_BEGIN = 
+			"				<fo:block-container position=\"absolute\" top=\"${top}pt\" left=\"${left}pt\" width=\"${width}pt\" height=\"${height}pt\">\n";
+	
+	/**
+	 * 画像位置指定ブロック終了。
+	 */
+	private static final String IMAGE_BLOCK_END = 
+			"				</fo:block-container>\n";
+
+	/**
+	 * 画像の配置タグを作成します。
+	 * @param tinfo テーブル情報。
+	 * @return 画像の配置タグ。
+	 */
+	private String getImageXml(final TableInfo tinfo) {
+		StringBuilder sb = new StringBuilder();
+		for (ImageInfo iinfo: tinfo.getImageList()) {
+			String imageBlockBegin = IMAGE_BLOCK_BEGIN;
+			imageBlockBegin = imageBlockBegin.replaceAll("\\$\\{top\\}", "" + iinfo.getTop());
+			imageBlockBegin = imageBlockBegin.replaceAll("\\$\\{left\\}", "" + iinfo.getLeft());
+			imageBlockBegin = imageBlockBegin.replaceAll("\\$\\{height\\}", "" + iinfo.getHeight());
+			imageBlockBegin = imageBlockBegin.replaceAll("\\$\\{width\\}", "" + iinfo.getWidth());
+			sb.append(imageBlockBegin);
+			sb.append("					<fo:block><fo:external-graphic src=\"" + iinfo .getImageSrc() + "\" width=\"" + iinfo.getWidth() + "pt\" height=\"" + iinfo.getHeight() + "pt\" content-width=\"" + iinfo.getWidth() + "pt\" content-height=\"" + iinfo.getHeight() + "pt\" border-style=\"dotted\" border-width=\"thin\"/></fo:block>\n");
+			sb.append(IMAGE_BLOCK_END);
+		}
+		return sb.toString();
+	}
+	
+	/**
 	 * XSL-FO形式のXMLを取得します。
 	 * @param wb ワークブック。
 	 * @param tinfo テーブル情報。
@@ -938,6 +1127,7 @@ public class ExcelToXSLFO {
 		pageBegin = pageBegin.replaceAll("\\$\\{fontPoint\\}", "" + f.getFontHeightInPoints());
 		sb.append(pageBegin);
 		sb.append(this.getTableXml(wb, tinfo));
+		sb.append(this.getImageXml(tinfo));
 		sb.append(PAGE_END);
 		sb.append(XML_ROOT_END);
 		return sb.toString();
