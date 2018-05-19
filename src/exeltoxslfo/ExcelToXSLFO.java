@@ -1141,12 +1141,26 @@ public class ExcelToXSLFO {
 		Sheet sh = wb.getSheetAt(getSheetIndex());
 		String pageMaster = PAGE_MASTER;
 		logger.debug("paperSize=" + sh.getPrintSetup().getPaperSize());
-		if (sh.getPrintSetup().getPaperSize() == PrintSetup.A5_PAPERSIZE) {
-			pageMaster = this.getPageMaster("210mm", "148mm", sh.getPrintSetup().getLandscape());
+		if (sh.getPrintSetup().getPaperSize() == PrintSetup.A3_PAPERSIZE) {
+			pageMaster = this.getPageMaster("420mm", "297mm", sh.getPrintSetup().getLandscape());
 		} else if (sh.getPrintSetup().getPaperSize() == PrintSetup.A4_PAPERSIZE) {
 			pageMaster = this.getPageMaster("297mm", "210mm", sh.getPrintSetup().getLandscape());
-		} else if (sh.getPrintSetup().getPaperSize() == PrintSetup.A3_PAPERSIZE) {
-			pageMaster = this.getPageMaster("420mm", "297mm", sh.getPrintSetup().getLandscape());
+		} else if (sh.getPrintSetup().getPaperSize() == PrintSetup.A5_PAPERSIZE) {
+			pageMaster = this.getPageMaster("210mm", "148mm", sh.getPrintSetup().getLandscape());
+		} else if (sh.getPrintSetup().getPaperSize() == PrintSetup.B4_PAPERSIZE) {
+			pageMaster = this.getPageMaster("354mm", "250mm", sh.getPrintSetup().getLandscape());
+		} else if (sh.getPrintSetup().getPaperSize() == PrintSetup.B5_PAPERSIZE) {
+			pageMaster = this.getPageMaster("257mm", "182mm", sh.getPrintSetup().getLandscape());
+		} else if (sh.getPrintSetup().getPaperSize() == PrintSetup.LETTER_PAPERSIZE) {
+			pageMaster = this.getPageMaster("279.4mm", "215.9mm", sh.getPrintSetup().getLandscape());
+		} else if (sh.getPrintSetup().getPaperSize() == PrintSetup.TABLOID_PAPERSIZE) {
+			pageMaster = this.getPageMaster("431.8mm", "279.4mm", sh.getPrintSetup().getLandscape());
+		} else if (sh.getPrintSetup().getPaperSize() == PrintSetup.LEGAL_PAPERSIZE) {
+			pageMaster = this.getPageMaster("355.6mm", "215.9mm", sh.getPrintSetup().getLandscape());
+		} else if (sh.getPrintSetup().getPaperSize() == PrintSetup.STATEMENT_PAPERSIZE) {
+			pageMaster = this.getPageMaster("215.9mm", "139.7mm", sh.getPrintSetup().getLandscape());
+		} else if (sh.getPrintSetup().getPaperSize() == PrintSetup.EXECUTIVE_PAPERSIZE) {
+			pageMaster = this.getPageMaster("266.7mm", "184.1mm", sh.getPrintSetup().getLandscape());
 		} else {
 			pageMaster = this.getPageMaster("297mm", "210mm", sh.getPrintSetup().getLandscape());
 		}
@@ -1176,8 +1190,8 @@ public class ExcelToXSLFO {
 		pageBegin = pageBegin.replaceAll("\\$\\{fontName\\}", f.getFontName());
 		pageBegin = pageBegin.replaceAll("\\$\\{fontPoint\\}", "" + f.getFontHeightInPoints());
 		sb.append(pageBegin);
-		sb.append(this.getTableXml(wb, tinfo));
 		sb.append(this.getImageXml(tinfo));
+		sb.append(this.getTableXml(wb, tinfo));
 		sb.append(PAGE_END);
 		sb.append(XML_ROOT_END);
 		return sb.toString();
