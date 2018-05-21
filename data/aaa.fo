@@ -57,7 +57,7 @@
 							<fo:table-cell  display-align="center" font-family="游ゴシック" font-size="11pt" color="#70AD47">
 								<fo:block>項目1</fo:block>
 							</fo:table-cell>
-							<fo:table-cell  display-align="after">
+							<fo:table-cell  display-align="after" text-align="right">
 								<fo:block>1</fo:block>
 							</fo:table-cell>
 							<fo:table-cell >
@@ -157,8 +157,8 @@
 							<fo:table-cell  display-align="after" border-bottom-style="dotted" border-bottom-width="0.12mm">
 								<fo:block>HAIR</fo:block>
 							</fo:table-cell>
-							<fo:table-cell  display-align="after">
-								<fo:block>8/30/18</fo:block>
+							<fo:table-cell  display-align="after" text-align="right">
+								<fo:block>2018/8/30</fo:block>
 							</fo:table-cell>
 							<fo:table-cell >
 								<fo:block></fo:block>
@@ -177,8 +177,8 @@
 							<fo:table-cell  display-align="after" border-top-style="dotted" border-top-width="0.12mm" border-bottom-style="dotted" border-bottom-width="thin">
 								<fo:block>DOTTED</fo:block>
 							</fo:table-cell>
-							<fo:table-cell  display-align="after">
-								<fo:block>8/30/18 20:20</fo:block>
+							<fo:table-cell  display-align="after" text-align="right">
+								<fo:block>2018/8/30 20:20</fo:block>
 							</fo:table-cell>
 							<fo:table-cell >
 								<fo:block></fo:block>
@@ -197,7 +197,7 @@
 							<fo:table-cell  display-align="after" border-top-style="dotted" border-top-width="thin" border-bottom-style="dashed" border-bottom-width="thin">
 								<fo:block>DASH_DOT_DOT</fo:block>
 							</fo:table-cell>
-							<fo:table-cell  display-align="after">
+							<fo:table-cell  display-align="after" text-align="right">
 								<fo:block>10,000.00</fo:block>
 							</fo:table-cell>
 							<fo:table-cell >
@@ -217,8 +217,8 @@
 							<fo:table-cell  display-align="after" border-top-style="dashed" border-top-width="thin" border-bottom-style="dashed" border-bottom-width="thin">
 								<fo:block>DASH_DOT</fo:block>
 							</fo:table-cell>
-							<fo:table-cell >
-								<fo:block></fo:block>
+							<fo:table-cell  display-align="after" text-align="right">
+								<fo:block>1000000</fo:block>
 							</fo:table-cell>
 							<fo:table-cell >
 								<fo:block></fo:block>
