@@ -58,7 +58,7 @@
 								<fo:block>項目1</fo:block>
 							</fo:table-cell>
 							<fo:table-cell  display-align="after">
-								<fo:block>1.0</fo:block>
+								<fo:block>1</fo:block>
 							</fo:table-cell>
 							<fo:table-cell >
 								<fo:block></fo:block>
@@ -157,8 +157,8 @@
 							<fo:table-cell  display-align="after" border-bottom-style="dotted" border-bottom-width="0.12mm">
 								<fo:block>HAIR</fo:block>
 							</fo:table-cell>
-							<fo:table-cell >
-								<fo:block></fo:block>
+							<fo:table-cell  display-align="after">
+								<fo:block>8/30/18</fo:block>
 							</fo:table-cell>
 							<fo:table-cell >
 								<fo:block></fo:block>
@@ -177,8 +177,8 @@
 							<fo:table-cell  display-align="after" border-top-style="dotted" border-top-width="0.12mm" border-bottom-style="dotted" border-bottom-width="thin">
 								<fo:block>DOTTED</fo:block>
 							</fo:table-cell>
-							<fo:table-cell >
-								<fo:block></fo:block>
+							<fo:table-cell  display-align="after">
+								<fo:block>8/30/18 20:20</fo:block>
 							</fo:table-cell>
 							<fo:table-cell >
 								<fo:block></fo:block>
@@ -197,8 +197,8 @@
 							<fo:table-cell  display-align="after" border-top-style="dotted" border-top-width="thin" border-bottom-style="dashed" border-bottom-width="thin">
 								<fo:block>DASH_DOT_DOT</fo:block>
 							</fo:table-cell>
-							<fo:table-cell >
-								<fo:block></fo:block>
+							<fo:table-cell  display-align="after">
+								<fo:block>10,000.00</fo:block>
 							</fo:table-cell>
 							<fo:table-cell >
 								<fo:block></fo:block>
@@ -274,7 +274,7 @@
 							</fo:table-cell>
 						</fo:table-row>
 						<fo:table-row height="19.5pt">
-							<fo:table-cell  display-align="after" border-top-style="solid" border-top-width="thin" border-bottom-style="dashed" border-bottom-width="medium">
+							<fo:table-cell  display-align="after" text-align="right" border-top-style="solid" border-top-width="thin" border-bottom-style="dashed" border-bottom-width="medium">
 								<fo:block>MEDIUM_DASH_DOT_DOT</fo:block>
 							</fo:table-cell>
 							<fo:table-cell >
@@ -294,7 +294,7 @@
 							</fo:table-cell>
 						</fo:table-row>
 						<fo:table-row height="19.5pt">
-							<fo:table-cell  display-align="after" border-top-style="dashed" border-top-width="medium" border-bottom-style="dashed" border-bottom-width="medium">
+							<fo:table-cell  display-align="after" text-align="right" border-top-style="dashed" border-top-width="medium" border-bottom-style="dashed" border-bottom-width="medium">
 								<fo:block>SLANTED_DASH_DOT</fo:block>
 							</fo:table-cell>
 							<fo:table-cell >
@@ -314,7 +314,7 @@
 							</fo:table-cell>
 						</fo:table-row>
 						<fo:table-row height="19.5pt">
-							<fo:table-cell  display-align="after" border-top-style="dashed" border-top-width="medium" border-bottom-style="dashed" border-bottom-width="medium">
+							<fo:table-cell  display-align="after" text-align="right" border-top-style="dashed" border-top-width="medium" border-bottom-style="dashed" border-bottom-width="medium">
 								<fo:block>MEDIUM_DASH_DOT</fo:block>
 							</fo:table-cell>
 							<fo:table-cell >
@@ -334,7 +334,7 @@
 							</fo:table-cell>
 						</fo:table-row>
 						<fo:table-row height="19.5pt">
-							<fo:table-cell  display-align="after" border-top-style="dashed" border-top-width="medium" border-bottom-style="dashed" border-bottom-width="medium">
+							<fo:table-cell  display-align="after" text-align="right" border-top-style="dashed" border-top-width="medium" border-bottom-style="dashed" border-bottom-width="medium">
 								<fo:block>MEDIUM_DASHED</fo:block>
 							</fo:table-cell>
 							<fo:table-cell >
@@ -354,7 +354,7 @@
 							</fo:table-cell>
 						</fo:table-row>
 						<fo:table-row height="19.5pt">
-							<fo:table-cell  display-align="after" border-top-style="dashed" border-top-width="medium" border-bottom-style="solid" border-bottom-width="medium">
+							<fo:table-cell  display-align="after" text-align="right" border-top-style="dashed" border-top-width="medium" border-bottom-style="solid" border-bottom-width="medium">
 								<fo:block>MEDIUM</fo:block>
 							</fo:table-cell>
 							<fo:table-cell >
@@ -374,7 +374,7 @@
 							</fo:table-cell>
 						</fo:table-row>
 						<fo:table-row height="19.5pt">
-							<fo:table-cell  display-align="after" border-top-style="solid" border-top-width="medium" border-bottom-style="solid" border-bottom-width="thick">
+							<fo:table-cell  display-align="after" text-align="right" border-top-style="solid" border-top-width="medium" border-bottom-style="solid" border-bottom-width="thick">
 								<fo:block>THICK</fo:block>
 							</fo:table-cell>
 							<fo:table-cell >
@@ -394,7 +394,7 @@
 							</fo:table-cell>
 						</fo:table-row>
 						<fo:table-row height="20.25pt">
-							<fo:table-cell  display-align="after" border-top-style="solid" border-top-width="thick" border-bottom-style="double" border-bottom-width="1.2mm">
+							<fo:table-cell  display-align="after" text-align="right" border-top-style="solid" border-top-width="thick" border-bottom-style="double" border-bottom-width="1.2mm">
 								<fo:block>DOUBLE</fo:block>
 							</fo:table-cell>
 							<fo:table-cell >

@@ -11,7 +11,10 @@ import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.CellValue;
+import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.FormulaEvaluator;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.PrintSetup;
 import org.apache.poi.ss.usermodel.Row;
@@ -168,6 +171,7 @@ public class ExcelToXSLFO {
 		 * ワークブック。
 		 */
 		private Workbook workbook = null;
+		
 		/**
 		 * セルのスタイル情報。
 		 */
@@ -177,15 +181,27 @@ public class ExcelToXSLFO {
 		 * 説結合によって表示されないセルを示すフラグ。
 		 */
 		private boolean hidden = false;
+		
 		/**
 		 * Row spanの値。
 		 */
 		private int rowSpan = -1;
+		
 		/**
 		 * Column spanの値。
 		 */
 		private int columnSpan = -1;
 
+		/**
+		 * セルの値。
+		 */
+		private String value = null;
+		
+		/**
+		 * セルタイプ。
+		 */
+		private CellType cellType = null;
+		
 		/**
 		 * ワークブック。
 		 * @param wb ワークブック。
@@ -439,12 +455,15 @@ public class ExcelToXSLFO {
 			}
 			if (this.style.getAlignmentEnum() == HorizontalAlignment.LEFT) {
 				attrib.append(" text-align=\"left\"");
-			}
-			if (this.style.getAlignmentEnum() == HorizontalAlignment.CENTER) {
+			} else 	if (this.style.getAlignmentEnum() == HorizontalAlignment.CENTER) {
 				attrib.append(" text-align=\"center\"");
-			}
-			if (this.style.getAlignmentEnum() == HorizontalAlignment.RIGHT) {
+			} else if (this.style.getAlignmentEnum() == HorizontalAlignment.RIGHT) {
 				attrib.append(" text-align=\"right\"");
+			} else {
+				CellType type = this.getCellType();
+				if (type == CellType.NUMERIC) {
+					attrib.append(" text-align=\"right\"");
+				}
 			}
 		}
 
@@ -455,6 +474,53 @@ public class ExcelToXSLFO {
 		public void setStyle(final CellStyle style) {
 			this.style = style;
 		}
+
+		/**
+		 * セルの値を取得します。
+		 * @return セルの値。
+		 */
+		public String getValue() {
+			return value;
+		}
+
+		/**
+		 * セルの値を設定します。
+		 * @param value セルの値。
+		 */
+		public void setValue(final String value) {
+			this.value = value;
+		}
+
+		/**
+		 * セルタイプを取得します。
+		 * @return セルタイプ。
+		 */
+		public CellType getCellType() {
+			return cellType;
+		}
+
+		/**
+		 * セルタイプを設定します。
+		 * @param cellType セルタイプ。
+		 */
+		public void setCellType(final CellType cellType) {
+			this.cellType = cellType;
+		}
+		
+		
+		
+		
+		/**
+		 * セルのスタイル情報を設定します。
+		 * @return セルスタイル。
+		 */
+		/*
+		public CellStyle getCellStyle() {
+			return this.style;
+		}*/
+		
+		
+		
 	}
 	
 	/**
@@ -581,6 +647,7 @@ public class ExcelToXSLFO {
 		 */
 		public TableInfo(final Workbook wb) throws Exception {
 			Sheet sh = wb.getSheetAt(getSheetIndex());
+			FormulaEvaluator fe = wb.getCreationHelper().createFormulaEvaluator();
 			int rows = this.getRows(sh);
 			int cols = this.getColums(sh);
 			this.cellInfo = new CellInfo[rows][cols];
@@ -590,6 +657,13 @@ public class ExcelToXSLFO {
 					Cell cell = this.getCell(sh, r, c);
 					if (cell != null) {
 						this.cellInfo[r][c].setStyle(cell.getCellStyle());
+						this.cellInfo[r][c].setValue(ExcelToXSLFO.this.getCellValue(cell, fe));
+						if (cell.getCellTypeEnum() == CellType.FORMULA) {
+							CellValue cv = fe.evaluate(cell);
+							this.cellInfo[r][c].setCellType(cv.getCellTypeEnum());
+						} else {
+							this.cellInfo[r][c].setCellType(cell.getCellTypeEnum());
+						}
 					}
 				}
 			}
@@ -975,15 +1049,20 @@ public class ExcelToXSLFO {
 	/**
 	 * セルの値を取得します。
 	 * @param cell セル。
+	 * @param fe 数式評価ツール。
 	 * @return 値。
 	 */
-	private String getCellValue(final Cell cell) {
+	private String getCellValue(final Cell cell, final FormulaEvaluator fe) {
+		DataFormatter fmt = new DataFormatter();
 		String value = "";
-		if (cell.getCellTypeEnum() == CellType.STRING) {
+		if (cell.getCellTypeEnum() == CellType.BLANK) {
+			value = "";
+		} else if (cell.getCellTypeEnum() == CellType.STRING) {
 			value = cell.getStringCellValue();
-		} else if (cell.getCellTypeEnum() == CellType.NUMERIC) {
-			double v  = cell.getNumericCellValue();
-			value = "" + v;
+		} else if (cell.getCellTypeEnum() == CellType.FORMULA) {
+			value = fmt.formatCellValue(cell, fe);
+		} else {
+			value = fmt.formatCellValue(cell);
 		}
 		return value;
 	}
@@ -1010,7 +1089,8 @@ public class ExcelToXSLFO {
 				if (cell != null) {
 					String cellBegin = TABLE_CELL_BEGIN.replaceAll("\\$\\{attrib\\}", ci.getCellAttribute());
 					sb.append(cellBegin);
-					String value = this.getCellValue(cell);
+//					String value = this.getCellValue(cell);
+					String value = ci.getValue();
 					sb.append(TABLE_CELL_BLOCK_BEGIN);
 					sb.append(value);
 					sb.append(TABLE_CELL_BLOCK_END);
