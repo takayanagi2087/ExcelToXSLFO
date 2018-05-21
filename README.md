@@ -1,17 +1,23 @@
 # ExcelToXSLFO
 
 ## Description
-dataforms.jarでpdfを出力したり、サーバから直接プリンターに出力したいという案件が発生。
-Apache-FOPを利用したReportクラスを作ることを検討。
-でもXSL-FOを手で書くのはめんどくさいし、Excelレポートで作ったテンプレートも使いたい。
-ということでExcelファイルからXSL-FO形式のファイルを作成するツールを作ってみようと思い立ちました。
-Excelの印刷の完璧な再現は難しいと思っていますが、とりあえずXSL-SOファイルのひな形をそれなりに作ることができるツールにはしたいと思います。
+ExcelファイルをXSL-FOファイルに変換します。  
+Excelの印刷の完璧な再現はできませんが、とりあえずXSL-SOファイルのひな形を作る程度には使えるものになっています。
 
 ## Install
-
+Java8がインストールされたPCで、[リリース](https://github.com/takayanagi2087/ExcelToXSLFO/releases)からExcelToXSLFOxxx.zipをダウンロードし、適切なフォルダに展開してください。  
+[Apache POI](https://poi.apache.org/)をダウンロードし、「<ExcelToXSLFOxxx.zipのディレクトリ>/lib」にPOIに含まれる*.jarファイルをコピーします。  
+excel2xslfo.batまたはexcel2xslfo.shを使用し、ExcelファイルをXSL-FOファイル変換を行います。  
+コマンドラインは以下のようになります。  
+  
+excel2xslfo [options] excelfile fofile  
+options:  
+-s sheetidx  
+  
 ## Demo
-
-## Requirement
+ExcelToXSLFOxxx.zip中のsample.xlsxとsample.foは以下のコマンドの実行結果です。  
+  
+excel2xlsfo sample.xlsx sample.fo  
 
 ## Licence
 [MIT](https://github.com/takayanagi2087/dataforms/blob/master/LICENSE)  
