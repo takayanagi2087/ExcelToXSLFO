@@ -11,7 +11,7 @@
 	</appender>
 
 	<category name="exeltoxslfo">
-		<priority value="debug" />
+		<priority value="info" />
 	</category>
 
 	<!-- ********************** root定義 ***************************** -->

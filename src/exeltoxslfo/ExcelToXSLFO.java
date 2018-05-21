@@ -110,39 +110,42 @@ public class ExcelToXSLFO {
 	public void setXslFoFile(final String xslFoFile) {
 		this.xslFoFile = xslFoFile;
 	}
+	
+	/**
+	 * 引数指定の例外。
+	 *
+	 */
+	private class ArgException extends Exception {
+		
+	};
 
 	/**
 	 * コマンドラインを解析します。
 	 * @param args コマンドライン引数。
+	 * @throws Exception 例外。
 	 */
-	private void parseAargs(final String[] args) {
-		try {
-			if (args.length >= 2) {
-				for (int i = 0; i < args.length; i++) {
-					if ("-s".equals(args[i])) {
-						int sheetIndex = Integer.parseInt(args[i + 1]);
-						this.setSheetIndex(sheetIndex);
-						i++;
+	private void parseAargs(final String[] args) throws Exception {
+		if (args.length >= 2) {
+			for (int i = 0; i < args.length; i++) {
+				if ("-s".equals(args[i])) {
+					int sheetIndex = Integer.parseInt(args[i + 1]);
+					this.setSheetIndex(sheetIndex);
+					i++;
+				} else {
+					if (this.getExcelFile() == null) {
+						this.setExcelFile(args[i]);
+					} else if (this.getXslFoFile() == null) {
+						this.setXslFoFile(args[i]);
 					} else {
-						if (this.getExcelFile() == null) {
-							this.setExcelFile(args[i]);
-						} else if (this.getXslFoFile() == null) {
-							this.setXslFoFile(args[i]);
-						} else {
-							throw new Exception();
-						}
+						throw new ArgException();
 					}
 				}
-			} else {
-				throw new Exception();
 			}
-		} catch (NumberFormatException e) {
-			logger.error(e.getMessage(), e);
-		} catch (Exception e) {
-			e.printStackTrace();
-			System.out.println("excel2fo [options] excelfile fofile");
-			System.out.println("options:");
-			System.out.println("-s sheetidx");
+			if (this.getExcelFile() == null || this.getXslFoFile() == null) {
+				throw new ArgException();
+			}
+		} else {
+			throw new ArgException();
 		}
 	}
 	
@@ -1305,9 +1308,14 @@ public class ExcelToXSLFO {
 	 */
 	public static void main(final String[] args) {
 		ExcelToXSLFO conv = new ExcelToXSLFO();
-		conv.parseAargs(args);
 		try {
+			conv.parseAargs(args);
 			conv.convert();
+		} catch (ArgException e) {
+			// e.printStackTrace();
+			System.out.println("excel2xslfo [options] excelfile fofile");
+			System.out.println("options:");
+			System.out.println("-s sheetidx");
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 		}
