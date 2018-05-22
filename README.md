@@ -2,7 +2,8 @@
 
 ## Description
 ExcelファイルをXSL-FOファイルに変換します。  
-Excelの印刷の完璧な再現はできませんが、とりあえずXSL-SOファイルのひな形を作る程度には使えるものになっています。
+Excelの印刷の完璧な再現はできませんが、とりあえずXSL-SOファイルのひな形を作る程度には使えるものになっています。  
+dataforms.jarでApache-FOPを利用したpdf出力やサーバからの直接印刷をサポートする予定なので、前段階で作成したツールになります。  
 
 ## Install
 Java8がインストールされたPCで、[リリース](https://github.com/takayanagi2087/ExcelToXSLFO/releases)からExcelToXSLFOxxx.zipをダウンロードし、適切なフォルダに展開してください。  
