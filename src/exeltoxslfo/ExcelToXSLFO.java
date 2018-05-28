@@ -180,6 +180,13 @@ public class ExcelToXSLFO {
 		 */
 		private CellStyle style = null;
 		
+
+		/**
+		 * セルのスタイル情報。
+		 */
+		private CellStyle bottomRightStyle = null;
+		
+
 		/**
 		 * 説結合によって表示されないセルを示すフラグ。
 		 */
@@ -391,13 +398,21 @@ public class ExcelToXSLFO {
 		 */
 		private void getBorderAttribute(final StringBuilder attrib) {
 			this.getBorderStyleAttribute(attrib, "top", this.style.getBorderTopEnum());
-			this.getBorderStyleAttribute(attrib, "bottom", this.style.getBorderBottomEnum());
 			this.getBorderStyleAttribute(attrib, "left", this.style.getBorderLeftEnum());
-			this.getBorderStyleAttribute(attrib, "right", this.style.getBorderRightEnum());
+			if (this.bottomRightStyle == null) {
+				this.getBorderStyleAttribute(attrib, "bottom", this.style.getBorderBottomEnum());
+				this.getBorderStyleAttribute(attrib, "right", this.style.getBorderRightEnum());
+			} else {
+				this.getBorderStyleAttribute(attrib, "bottom", this.bottomRightStyle.getBorderBottomEnum());
+				this.getBorderStyleAttribute(attrib, "right", this.bottomRightStyle.getBorderRightEnum());
+			}
 			XSSFCellStyle style = (XSSFCellStyle) this.style;
 			this.getBorderColorAttribute(attrib, "border-top-color", style.getTopBorderXSSFColor());
-			this.getBorderColorAttribute(attrib, "border-bottom-color", style.getBottomBorderXSSFColor());
 			this.getBorderColorAttribute(attrib, "border-left-color", style.getLeftBorderXSSFColor());
+			if (this.bottomRightStyle != null) {
+				style = (XSSFCellStyle) this.bottomRightStyle;
+			}
+			this.getBorderColorAttribute(attrib, "border-bottom-color", style.getBottomBorderXSSFColor());
 			this.getBorderColorAttribute(attrib, "border-right-color", style.getRightBorderXSSFColor());
 		}
 		
@@ -476,6 +491,17 @@ public class ExcelToXSLFO {
 		 */
 		public void setStyle(final CellStyle style) {
 			this.style = style;
+		}
+		
+		/**
+		 * セルの右下のスタイルを設定します。
+		 * <pre>
+		 * セルが結合された場合のみ設定。
+		 * </pre>
+		 * @param bottomRightStyle セルの右下のスタイル。
+		 */
+		public void setBottomRightStyle(final CellStyle bottomRightStyle) {
+			this.bottomRightStyle = bottomRightStyle;
 		}
 
 		/**
@@ -800,6 +826,13 @@ public class ExcelToXSLFO {
 				this.getCellInfo(r0, c0).setRowSpan(rowSpan);
 				this.getCellInfo(r0, c0).setColumnSpan(colSpan);
 				this.getCellInfo(r0, c0).setHidden(false);
+				Row row = sh.getRow(rgn.getLastRow());
+				if (row != null) {
+					Cell cell = row.getCell(rgn.getLastColumn());
+					if (cell != null) {
+						this.getCellInfo(r0, c0).setBottomRightStyle(cell.getCellStyle());
+					}
+				}
 			}
 		}
 		
