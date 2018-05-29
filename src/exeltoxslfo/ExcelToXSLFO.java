@@ -1072,7 +1072,7 @@ public class ExcelToXSLFO {
 	 * セル内容ブロックタグ。
 	 */
 	private static final String TABLE_CELL_BLOCK_BEGIN = 
-			"								<fo:block>";
+			"								<fo:block margin-left=\"1mm\">";
 
 	
 	/**
