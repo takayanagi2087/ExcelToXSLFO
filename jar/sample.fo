@@ -24,413 +24,413 @@
 					<fo:table-body>
 						<fo:table-row height="18.75pt">
 							<fo:table-cell  number-rows-spanned="2"  number-columns-spanned="2"  display-align="before" text-align="center" font-family="HGP行書体" font-size="16pt" color="#FF0000">
-								<fo:block>ExcelからXSL-FOへの変換テスト</fo:block>
+								<fo:block margin-left="1mm">ExcelからXSL-FOへの変換テスト</fo:block>
 							</fo:table-cell>
 							<fo:table-cell >
-								<fo:block></fo:block>
+								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
 							<fo:table-cell >
-								<fo:block></fo:block>
+								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
 							<fo:table-cell >
-								<fo:block></fo:block>
+								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
 							<fo:table-cell >
-								<fo:block></fo:block>
+								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
 						</fo:table-row>
 						<fo:table-row height="18.75pt">
 							<fo:table-cell  display-align="after">
-								<fo:block> </fo:block>
+								<fo:block margin-left="1mm"> </fo:block>
 							</fo:table-cell>
 							<fo:table-cell >
-								<fo:block></fo:block>
+								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
 							<fo:table-cell >
-								<fo:block></fo:block>
+								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
 							<fo:table-cell >
-								<fo:block></fo:block>
+								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
 						</fo:table-row>
 						<fo:table-row height="18.75pt">
 							<fo:table-cell  display-align="center" font-family="游ゴシック" font-size="11pt" color="#70AD47">
-								<fo:block>項目1</fo:block>
+								<fo:block margin-left="1mm">項目1</fo:block>
 							</fo:table-cell>
 							<fo:table-cell  display-align="after" text-align="right">
-								<fo:block>1</fo:block>
+								<fo:block margin-left="1mm">1</fo:block>
 							</fo:table-cell>
 							<fo:table-cell >
-								<fo:block></fo:block>
+								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
 							<fo:table-cell >
-								<fo:block></fo:block>
+								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
 							<fo:table-cell >
-								<fo:block></fo:block>
+								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
 							<fo:table-cell >
-								<fo:block></fo:block>
+								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
 						</fo:table-row>
 						<fo:table-row height="105.0pt">
 							<fo:table-cell  display-align="before" text-align="center">
-								<fo:block>項目2</fo:block>
+								<fo:block margin-left="1mm">項目2</fo:block>
 							</fo:table-cell>
 							<fo:table-cell  display-align="after" font-family="游ゴシック" font-size="11pt" color="#000000" font-weight="bold" font-style="italic" text-decoration="underline" background-color="#FFFF00" >
-								<fo:block>aaaa</fo:block>
+								<fo:block margin-left="1mm">aaaa</fo:block>
 							</fo:table-cell>
 							<fo:table-cell >
-								<fo:block></fo:block>
+								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
 							<fo:table-cell >
-								<fo:block></fo:block>
+								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
 							<fo:table-cell >
-								<fo:block></fo:block>
+								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
 							<fo:table-cell >
-								<fo:block></fo:block>
+								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
 						</fo:table-row>
 						<fo:table-row height="19.5pt">
 							<fo:table-cell  display-align="after" text-align="right">
-								<fo:block>項目3</fo:block>
+								<fo:block margin-left="1mm">項目3</fo:block>
 							</fo:table-cell>
 							<fo:table-cell  display-align="after">
-								<fo:block>漢字</fo:block>
+								<fo:block margin-left="1mm">漢字</fo:block>
 							</fo:table-cell>
 							<fo:table-cell >
-								<fo:block></fo:block>
+								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
 							<fo:table-cell >
-								<fo:block></fo:block>
+								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
 							<fo:table-cell >
-								<fo:block></fo:block>
+								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
 							<fo:table-cell >
-								<fo:block></fo:block>
+								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
 						</fo:table-row>
 						<fo:table-row height="96.0pt">
 							<fo:table-cell  display-align="center" text-align="left">
-								<fo:block>00000000</fo:block>
+								<fo:block margin-left="1mm">00000000</fo:block>
 							</fo:table-cell>
-							<fo:table-cell  display-align="after" border-top-style="double" border-top-width="1.2mm" border-bottom-style="dashed" border-bottom-width="medium" border-left-style="dotted" border-left-width="0.12mm" border-right-style="dashed" border-right-width="medium" border-top-color="#C00000">
-								<fo:block></fo:block>
-							</fo:table-cell>
-							<fo:table-cell >
-								<fo:block></fo:block>
+							<fo:table-cell  display-align="after" border-top-style="double" border-top-width="1.2mm" border-left-style="dotted" border-left-width="0.12mm" border-bottom-style="dashed" border-bottom-width="medium" border-right-style="dashed" border-right-width="medium" border-top-color="#C00000">
+								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
 							<fo:table-cell >
-								<fo:block></fo:block>
+								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
 							<fo:table-cell >
-								<fo:block></fo:block>
+								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
 							<fo:table-cell >
-								<fo:block></fo:block>
+								<fo:block margin-left="1mm"></fo:block>
+							</fo:table-cell>
+							<fo:table-cell >
+								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
 						</fo:table-row>
 						<fo:table-row height="18.75pt">
 							<fo:table-cell  display-align="after">
-								<fo:block>12345678</fo:block>
+								<fo:block margin-left="1mm">12345678</fo:block>
 							</fo:table-cell>
 							<fo:table-cell >
-								<fo:block></fo:block>
+								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
 							<fo:table-cell >
-								<fo:block></fo:block>
+								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
 							<fo:table-cell >
-								<fo:block></fo:block>
+								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
 							<fo:table-cell >
-								<fo:block></fo:block>
+								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
 							<fo:table-cell >
-								<fo:block></fo:block>
+								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
 						</fo:table-row>
 						<fo:table-row height="18.75pt">
 							<fo:table-cell  display-align="after" border-bottom-style="dotted" border-bottom-width="0.12mm">
-								<fo:block>HAIR</fo:block>
+								<fo:block margin-left="1mm">HAIR</fo:block>
 							</fo:table-cell>
 							<fo:table-cell  display-align="after" text-align="right">
-								<fo:block>2018/8/30</fo:block>
+								<fo:block margin-left="1mm">2018/8/30</fo:block>
 							</fo:table-cell>
 							<fo:table-cell >
-								<fo:block></fo:block>
+								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
 							<fo:table-cell >
-								<fo:block></fo:block>
+								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
 							<fo:table-cell >
-								<fo:block></fo:block>
+								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
 							<fo:table-cell >
-								<fo:block></fo:block>
+								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
 						</fo:table-row>
 						<fo:table-row height="18.75pt">
 							<fo:table-cell  display-align="after" border-top-style="dotted" border-top-width="0.12mm" border-bottom-style="dotted" border-bottom-width="thin">
-								<fo:block>DOTTED</fo:block>
+								<fo:block margin-left="1mm">DOTTED</fo:block>
 							</fo:table-cell>
 							<fo:table-cell  display-align="after" text-align="right">
-								<fo:block>2018/8/30 20:20</fo:block>
+								<fo:block margin-left="1mm">2018/8/30 20:20</fo:block>
 							</fo:table-cell>
 							<fo:table-cell >
-								<fo:block></fo:block>
+								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
 							<fo:table-cell >
-								<fo:block></fo:block>
+								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
 							<fo:table-cell >
-								<fo:block></fo:block>
+								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
 							<fo:table-cell >
-								<fo:block></fo:block>
+								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
 						</fo:table-row>
 						<fo:table-row height="18.75pt">
 							<fo:table-cell  display-align="after" border-top-style="dotted" border-top-width="thin" border-bottom-style="dashed" border-bottom-width="thin">
-								<fo:block>DASH_DOT_DOT</fo:block>
+								<fo:block margin-left="1mm">DASH_DOT_DOT</fo:block>
 							</fo:table-cell>
 							<fo:table-cell  display-align="after" text-align="right">
-								<fo:block>10,000.00</fo:block>
+								<fo:block margin-left="1mm">10,000.00</fo:block>
 							</fo:table-cell>
 							<fo:table-cell >
-								<fo:block></fo:block>
+								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
 							<fo:table-cell >
-								<fo:block></fo:block>
+								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
 							<fo:table-cell >
-								<fo:block></fo:block>
+								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
 							<fo:table-cell >
-								<fo:block></fo:block>
+								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
 						</fo:table-row>
 						<fo:table-row height="19.5pt">
 							<fo:table-cell  display-align="after" border-top-style="dashed" border-top-width="thin" border-bottom-style="dashed" border-bottom-width="thin">
-								<fo:block>DASH_DOT</fo:block>
+								<fo:block margin-left="1mm">DASH_DOT</fo:block>
 							</fo:table-cell>
 							<fo:table-cell  display-align="after" text-align="right">
-								<fo:block>1000000</fo:block>
+								<fo:block margin-left="1mm">1000000</fo:block>
 							</fo:table-cell>
 							<fo:table-cell >
-								<fo:block></fo:block>
+								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
 							<fo:table-cell >
-								<fo:block></fo:block>
+								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
 							<fo:table-cell >
-								<fo:block></fo:block>
+								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
 							<fo:table-cell >
-								<fo:block></fo:block>
+								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
 						</fo:table-row>
 						<fo:table-row height="19.5pt">
 							<fo:table-cell  display-align="after" border-bottom-style="dashed" border-bottom-width="thin">
-								<fo:block>DASHED</fo:block>
+								<fo:block margin-left="1mm">DASHED</fo:block>
 							</fo:table-cell>
 							<fo:table-cell >
-								<fo:block></fo:block>
+								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
-							<fo:table-cell  display-align="after" border-top-style="solid" border-top-width="medium" border-bottom-style="double" border-bottom-width="1.2mm" border-left-style="solid" border-left-width="medium" border-right-style="solid" border-right-width="thin">
-								<fo:block></fo:block>
+							<fo:table-cell  display-align="after" border-top-style="solid" border-top-width="medium" border-left-style="solid" border-left-width="medium" border-bottom-style="double" border-bottom-width="1.2mm" border-right-style="solid" border-right-width="thin">
+								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
-							<fo:table-cell  display-align="after" border-top-style="solid" border-top-width="medium" border-bottom-style="double" border-bottom-width="1.2mm" border-left-style="solid" border-left-width="thin" border-right-style="solid" border-right-width="thin">
-								<fo:block></fo:block>
+							<fo:table-cell  display-align="after" border-top-style="solid" border-top-width="medium" border-left-style="solid" border-left-width="thin" border-bottom-style="double" border-bottom-width="1.2mm" border-right-style="solid" border-right-width="thin">
+								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
-							<fo:table-cell  display-align="after" border-top-style="solid" border-top-width="medium" border-bottom-style="double" border-bottom-width="1.2mm" border-left-style="solid" border-left-width="thin" border-right-style="solid" border-right-width="thin">
-								<fo:block></fo:block>
+							<fo:table-cell  display-align="after" border-top-style="solid" border-top-width="medium" border-left-style="solid" border-left-width="thin" border-bottom-style="double" border-bottom-width="1.2mm" border-right-style="solid" border-right-width="thin">
+								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
-							<fo:table-cell  display-align="after" border-top-style="solid" border-top-width="medium" border-bottom-style="double" border-bottom-width="1.2mm" border-left-style="solid" border-left-width="thin" border-right-style="solid" border-right-width="medium">
-								<fo:block></fo:block>
+							<fo:table-cell  display-align="after" border-top-style="solid" border-top-width="medium" border-left-style="solid" border-left-width="thin" border-bottom-style="double" border-bottom-width="1.2mm" border-right-style="solid" border-right-width="medium">
+								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
 						</fo:table-row>
 						<fo:table-row height="19.5pt">
 							<fo:table-cell  display-align="after" border-bottom-style="solid" border-bottom-width="thin">
-								<fo:block>THIN</fo:block>
+								<fo:block margin-left="1mm">THIN</fo:block>
 							</fo:table-cell>
 							<fo:table-cell >
-								<fo:block></fo:block>
+								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
-							<fo:table-cell  display-align="after" border-bottom-style="solid" border-bottom-width="thin" border-left-style="solid" border-left-width="medium" border-right-style="solid" border-right-width="thin">
-								<fo:block></fo:block>
+							<fo:table-cell  display-align="after" border-left-style="solid" border-left-width="medium" border-bottom-style="solid" border-bottom-width="thin" border-right-style="solid" border-right-width="thin">
+								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
-							<fo:table-cell  display-align="after" border-bottom-style="solid" border-bottom-width="thin" border-left-style="solid" border-left-width="thin" border-right-style="solid" border-right-width="thin">
-								<fo:block></fo:block>
+							<fo:table-cell  display-align="after" border-left-style="solid" border-left-width="thin" border-bottom-style="solid" border-bottom-width="thin" border-right-style="solid" border-right-width="thin">
+								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
-							<fo:table-cell  display-align="after" border-bottom-style="solid" border-bottom-width="thin" border-left-style="solid" border-left-width="thin" border-right-style="solid" border-right-width="thin">
-								<fo:block></fo:block>
+							<fo:table-cell  display-align="after" border-left-style="solid" border-left-width="thin" border-bottom-style="solid" border-bottom-width="thin" border-right-style="solid" border-right-width="thin">
+								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
-							<fo:table-cell  display-align="after" border-bottom-style="solid" border-bottom-width="thin" border-left-style="solid" border-left-width="thin" border-right-style="solid" border-right-width="medium">
-								<fo:block></fo:block>
+							<fo:table-cell  display-align="after" border-left-style="solid" border-left-width="thin" border-bottom-style="solid" border-bottom-width="thin" border-right-style="solid" border-right-width="medium">
+								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
 						</fo:table-row>
 						<fo:table-row height="19.5pt">
 							<fo:table-cell  display-align="after" text-align="right" border-top-style="solid" border-top-width="thin" border-bottom-style="dashed" border-bottom-width="medium">
-								<fo:block>MEDIUM_DASH_DOT_DOT</fo:block>
+								<fo:block margin-left="1mm">MEDIUM_DASH_DOT_DOT</fo:block>
 							</fo:table-cell>
 							<fo:table-cell >
-								<fo:block></fo:block>
+								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
-							<fo:table-cell  display-align="after" border-top-style="solid" border-top-width="thin" border-bottom-style="solid" border-bottom-width="thin" border-left-style="solid" border-left-width="medium" border-right-style="solid" border-right-width="thin">
-								<fo:block></fo:block>
+							<fo:table-cell  display-align="after" border-top-style="solid" border-top-width="thin" border-left-style="solid" border-left-width="medium" border-bottom-style="solid" border-bottom-width="thin" border-right-style="solid" border-right-width="thin">
+								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
-							<fo:table-cell  display-align="after" border-top-style="solid" border-top-width="thin" border-bottom-style="solid" border-bottom-width="thin" border-left-style="solid" border-left-width="thin" border-right-style="solid" border-right-width="thin">
-								<fo:block></fo:block>
+							<fo:table-cell  display-align="after" border-top-style="solid" border-top-width="thin" border-left-style="solid" border-left-width="thin" border-bottom-style="solid" border-bottom-width="thin" border-right-style="solid" border-right-width="thin">
+								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
-							<fo:table-cell  display-align="after" border-top-style="solid" border-top-width="thin" border-bottom-style="solid" border-bottom-width="thin" border-left-style="solid" border-left-width="thin" border-right-style="solid" border-right-width="thin">
-								<fo:block></fo:block>
+							<fo:table-cell  display-align="after" border-top-style="solid" border-top-width="thin" border-left-style="solid" border-left-width="thin" border-bottom-style="solid" border-bottom-width="thin" border-right-style="solid" border-right-width="thin">
+								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
-							<fo:table-cell  display-align="after" border-top-style="solid" border-top-width="thin" border-bottom-style="solid" border-bottom-width="thin" border-left-style="solid" border-left-width="thin" border-right-style="solid" border-right-width="medium">
-								<fo:block></fo:block>
+							<fo:table-cell  display-align="after" border-top-style="solid" border-top-width="thin" border-left-style="solid" border-left-width="thin" border-bottom-style="solid" border-bottom-width="thin" border-right-style="solid" border-right-width="medium">
+								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
 						</fo:table-row>
 						<fo:table-row height="19.5pt">
 							<fo:table-cell  display-align="after" text-align="right" border-top-style="dashed" border-top-width="medium" border-bottom-style="dashed" border-bottom-width="medium">
-								<fo:block>SLANTED_DASH_DOT</fo:block>
+								<fo:block margin-left="1mm">SLANTED_DASH_DOT</fo:block>
 							</fo:table-cell>
 							<fo:table-cell >
-								<fo:block></fo:block>
+								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
-							<fo:table-cell  display-align="after" border-top-style="solid" border-top-width="thin" border-bottom-style="solid" border-bottom-width="thin" border-left-style="solid" border-left-width="medium" border-right-style="solid" border-right-width="thin">
-								<fo:block></fo:block>
+							<fo:table-cell  display-align="after" border-top-style="solid" border-top-width="thin" border-left-style="solid" border-left-width="medium" border-bottom-style="solid" border-bottom-width="thin" border-right-style="solid" border-right-width="thin">
+								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
-							<fo:table-cell  display-align="after" border-top-style="solid" border-top-width="thin" border-bottom-style="solid" border-bottom-width="thin" border-left-style="solid" border-left-width="thin" border-right-style="solid" border-right-width="thin">
-								<fo:block></fo:block>
+							<fo:table-cell  display-align="after" border-top-style="solid" border-top-width="thin" border-left-style="solid" border-left-width="thin" border-bottom-style="solid" border-bottom-width="thin" border-right-style="solid" border-right-width="thin">
+								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
-							<fo:table-cell  display-align="after" border-top-style="solid" border-top-width="thin" border-bottom-style="solid" border-bottom-width="thin" border-left-style="solid" border-left-width="thin" border-right-style="solid" border-right-width="thin">
-								<fo:block></fo:block>
+							<fo:table-cell  display-align="after" border-top-style="solid" border-top-width="thin" border-left-style="solid" border-left-width="thin" border-bottom-style="solid" border-bottom-width="thin" border-right-style="solid" border-right-width="thin">
+								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
-							<fo:table-cell  display-align="after" border-top-style="solid" border-top-width="thin" border-bottom-style="solid" border-bottom-width="thin" border-left-style="solid" border-left-width="thin" border-right-style="solid" border-right-width="medium">
-								<fo:block></fo:block>
+							<fo:table-cell  display-align="after" border-top-style="solid" border-top-width="thin" border-left-style="solid" border-left-width="thin" border-bottom-style="solid" border-bottom-width="thin" border-right-style="solid" border-right-width="medium">
+								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
 						</fo:table-row>
 						<fo:table-row height="19.5pt">
 							<fo:table-cell  display-align="after" text-align="right" border-top-style="dashed" border-top-width="medium" border-bottom-style="dashed" border-bottom-width="medium">
-								<fo:block>MEDIUM_DASH_DOT</fo:block>
+								<fo:block margin-left="1mm">MEDIUM_DASH_DOT</fo:block>
 							</fo:table-cell>
 							<fo:table-cell >
-								<fo:block></fo:block>
+								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
-							<fo:table-cell  display-align="after" border-top-style="solid" border-top-width="thin" border-bottom-style="solid" border-bottom-width="thin" border-left-style="solid" border-left-width="medium" border-right-style="solid" border-right-width="thin">
-								<fo:block></fo:block>
+							<fo:table-cell  display-align="after" border-top-style="solid" border-top-width="thin" border-left-style="solid" border-left-width="medium" border-bottom-style="solid" border-bottom-width="thin" border-right-style="solid" border-right-width="thin">
+								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
-							<fo:table-cell  display-align="after" border-top-style="solid" border-top-width="thin" border-bottom-style="solid" border-bottom-width="thin" border-left-style="solid" border-left-width="thin" border-right-style="solid" border-right-width="thin">
-								<fo:block></fo:block>
+							<fo:table-cell  display-align="after" border-top-style="solid" border-top-width="thin" border-left-style="solid" border-left-width="thin" border-bottom-style="solid" border-bottom-width="thin" border-right-style="solid" border-right-width="thin">
+								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
-							<fo:table-cell  display-align="after" border-top-style="solid" border-top-width="thin" border-bottom-style="solid" border-bottom-width="thin" border-left-style="solid" border-left-width="thin" border-right-style="solid" border-right-width="thin">
-								<fo:block></fo:block>
+							<fo:table-cell  display-align="after" border-top-style="solid" border-top-width="thin" border-left-style="solid" border-left-width="thin" border-bottom-style="solid" border-bottom-width="thin" border-right-style="solid" border-right-width="thin">
+								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
-							<fo:table-cell  display-align="after" border-top-style="solid" border-top-width="thin" border-bottom-style="solid" border-bottom-width="thin" border-left-style="solid" border-left-width="thin" border-right-style="solid" border-right-width="medium">
-								<fo:block></fo:block>
+							<fo:table-cell  display-align="after" border-top-style="solid" border-top-width="thin" border-left-style="solid" border-left-width="thin" border-bottom-style="solid" border-bottom-width="thin" border-right-style="solid" border-right-width="medium">
+								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
 						</fo:table-row>
 						<fo:table-row height="19.5pt">
 							<fo:table-cell  display-align="after" text-align="right" border-top-style="dashed" border-top-width="medium" border-bottom-style="dashed" border-bottom-width="medium">
-								<fo:block>MEDIUM_DASHED</fo:block>
+								<fo:block margin-left="1mm">MEDIUM_DASHED</fo:block>
 							</fo:table-cell>
 							<fo:table-cell >
-								<fo:block></fo:block>
+								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
-							<fo:table-cell  display-align="after" border-top-style="solid" border-top-width="thin" border-bottom-style="solid" border-bottom-width="thin" border-left-style="solid" border-left-width="medium" border-right-style="solid" border-right-width="thin">
-								<fo:block></fo:block>
+							<fo:table-cell  display-align="after" border-top-style="solid" border-top-width="thin" border-left-style="solid" border-left-width="medium" border-bottom-style="solid" border-bottom-width="thin" border-right-style="solid" border-right-width="thin">
+								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
-							<fo:table-cell  display-align="after" border-top-style="solid" border-top-width="thin" border-bottom-style="solid" border-bottom-width="thin" border-left-style="solid" border-left-width="thin" border-right-style="solid" border-right-width="thin">
-								<fo:block></fo:block>
+							<fo:table-cell  display-align="after" border-top-style="solid" border-top-width="thin" border-left-style="solid" border-left-width="thin" border-bottom-style="solid" border-bottom-width="thin" border-right-style="solid" border-right-width="thin">
+								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
-							<fo:table-cell  display-align="after" border-top-style="solid" border-top-width="thin" border-bottom-style="solid" border-bottom-width="thin" border-left-style="solid" border-left-width="thin" border-right-style="solid" border-right-width="thin">
-								<fo:block></fo:block>
+							<fo:table-cell  display-align="after" border-top-style="solid" border-top-width="thin" border-left-style="solid" border-left-width="thin" border-bottom-style="solid" border-bottom-width="thin" border-right-style="solid" border-right-width="thin">
+								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
-							<fo:table-cell  display-align="after" border-top-style="solid" border-top-width="thin" border-bottom-style="solid" border-bottom-width="thin" border-left-style="solid" border-left-width="thin" border-right-style="solid" border-right-width="medium">
-								<fo:block></fo:block>
+							<fo:table-cell  display-align="after" border-top-style="solid" border-top-width="thin" border-left-style="solid" border-left-width="thin" border-bottom-style="solid" border-bottom-width="thin" border-right-style="solid" border-right-width="medium">
+								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
 						</fo:table-row>
 						<fo:table-row height="19.5pt">
 							<fo:table-cell  display-align="after" text-align="right" border-top-style="dashed" border-top-width="medium" border-bottom-style="solid" border-bottom-width="medium">
-								<fo:block>MEDIUM</fo:block>
+								<fo:block margin-left="1mm">MEDIUM</fo:block>
 							</fo:table-cell>
 							<fo:table-cell >
-								<fo:block></fo:block>
+								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
-							<fo:table-cell  display-align="after" border-top-style="solid" border-top-width="thin" border-bottom-style="solid" border-bottom-width="thin" border-left-style="solid" border-left-width="medium" border-right-style="solid" border-right-width="thin">
-								<fo:block></fo:block>
+							<fo:table-cell  display-align="after" border-top-style="solid" border-top-width="thin" border-left-style="solid" border-left-width="medium" border-bottom-style="solid" border-bottom-width="thin" border-right-style="solid" border-right-width="thin">
+								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
-							<fo:table-cell  display-align="after" border-top-style="solid" border-top-width="thin" border-bottom-style="solid" border-bottom-width="thin" border-left-style="solid" border-left-width="thin" border-right-style="solid" border-right-width="thin">
-								<fo:block></fo:block>
+							<fo:table-cell  display-align="after" border-top-style="solid" border-top-width="thin" border-left-style="solid" border-left-width="thin" border-bottom-style="solid" border-bottom-width="thin" border-right-style="solid" border-right-width="thin">
+								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
-							<fo:table-cell  display-align="after" border-top-style="solid" border-top-width="thin" border-bottom-style="solid" border-bottom-width="thin" border-left-style="solid" border-left-width="thin" border-right-style="solid" border-right-width="thin">
-								<fo:block></fo:block>
+							<fo:table-cell  display-align="after" border-top-style="solid" border-top-width="thin" border-left-style="solid" border-left-width="thin" border-bottom-style="solid" border-bottom-width="thin" border-right-style="solid" border-right-width="thin">
+								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
-							<fo:table-cell  display-align="after" border-top-style="solid" border-top-width="thin" border-bottom-style="solid" border-bottom-width="thin" border-left-style="solid" border-left-width="thin" border-right-style="solid" border-right-width="medium">
-								<fo:block></fo:block>
+							<fo:table-cell  display-align="after" border-top-style="solid" border-top-width="thin" border-left-style="solid" border-left-width="thin" border-bottom-style="solid" border-bottom-width="thin" border-right-style="solid" border-right-width="medium">
+								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
 						</fo:table-row>
 						<fo:table-row height="19.5pt">
 							<fo:table-cell  display-align="after" text-align="right" border-top-style="solid" border-top-width="medium" border-bottom-style="solid" border-bottom-width="thick">
-								<fo:block>THICK</fo:block>
+								<fo:block margin-left="1mm">THICK</fo:block>
 							</fo:table-cell>
 							<fo:table-cell >
-								<fo:block></fo:block>
+								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
-							<fo:table-cell  display-align="after" border-top-style="solid" border-top-width="thin" border-bottom-style="solid" border-bottom-width="thin" border-left-style="solid" border-left-width="medium" border-right-style="solid" border-right-width="thin">
-								<fo:block></fo:block>
+							<fo:table-cell  display-align="after" border-top-style="solid" border-top-width="thin" border-left-style="solid" border-left-width="medium" border-bottom-style="solid" border-bottom-width="thin" border-right-style="solid" border-right-width="thin">
+								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
-							<fo:table-cell  display-align="after" border-top-style="solid" border-top-width="thin" border-bottom-style="solid" border-bottom-width="thin" border-left-style="solid" border-left-width="thin" border-right-style="solid" border-right-width="thin">
-								<fo:block></fo:block>
+							<fo:table-cell  display-align="after" border-top-style="solid" border-top-width="thin" border-left-style="solid" border-left-width="thin" border-bottom-style="solid" border-bottom-width="thin" border-right-style="solid" border-right-width="thin">
+								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
-							<fo:table-cell  display-align="after" border-top-style="solid" border-top-width="thin" border-bottom-style="solid" border-bottom-width="thin" border-left-style="solid" border-left-width="thin" border-right-style="solid" border-right-width="thin">
-								<fo:block></fo:block>
+							<fo:table-cell  display-align="after" border-top-style="solid" border-top-width="thin" border-left-style="solid" border-left-width="thin" border-bottom-style="solid" border-bottom-width="thin" border-right-style="solid" border-right-width="thin">
+								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
-							<fo:table-cell  display-align="after" border-top-style="solid" border-top-width="thin" border-bottom-style="solid" border-bottom-width="thin" border-left-style="solid" border-left-width="thin" border-right-style="solid" border-right-width="medium">
-								<fo:block></fo:block>
+							<fo:table-cell  display-align="after" border-top-style="solid" border-top-width="thin" border-left-style="solid" border-left-width="thin" border-bottom-style="solid" border-bottom-width="thin" border-right-style="solid" border-right-width="medium">
+								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
 						</fo:table-row>
 						<fo:table-row height="20.25pt">
 							<fo:table-cell  display-align="after" text-align="right" border-top-style="solid" border-top-width="thick" border-bottom-style="double" border-bottom-width="1.2mm">
-								<fo:block>DOUBLE</fo:block>
+								<fo:block margin-left="1mm">DOUBLE</fo:block>
 							</fo:table-cell>
 							<fo:table-cell >
-								<fo:block></fo:block>
+								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
-							<fo:table-cell  display-align="after" border-top-style="solid" border-top-width="thin" border-bottom-style="solid" border-bottom-width="medium" border-left-style="solid" border-left-width="medium" border-right-style="solid" border-right-width="thin">
-								<fo:block></fo:block>
+							<fo:table-cell  display-align="after" border-top-style="solid" border-top-width="thin" border-left-style="solid" border-left-width="medium" border-bottom-style="solid" border-bottom-width="medium" border-right-style="solid" border-right-width="thin">
+								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
-							<fo:table-cell  display-align="after" border-top-style="solid" border-top-width="thin" border-bottom-style="solid" border-bottom-width="medium" border-left-style="solid" border-left-width="thin" border-right-style="solid" border-right-width="thin">
-								<fo:block></fo:block>
+							<fo:table-cell  display-align="after" border-top-style="solid" border-top-width="thin" border-left-style="solid" border-left-width="thin" border-bottom-style="solid" border-bottom-width="medium" border-right-style="solid" border-right-width="thin">
+								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
-							<fo:table-cell  display-align="after" border-top-style="solid" border-top-width="thin" border-bottom-style="solid" border-bottom-width="medium" border-left-style="solid" border-left-width="thin" border-right-style="solid" border-right-width="thin">
-								<fo:block></fo:block>
+							<fo:table-cell  display-align="after" border-top-style="solid" border-top-width="thin" border-left-style="solid" border-left-width="thin" border-bottom-style="solid" border-bottom-width="medium" border-right-style="solid" border-right-width="thin">
+								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
-							<fo:table-cell  display-align="after" border-top-style="solid" border-top-width="thin" border-bottom-style="solid" border-bottom-width="medium" border-left-style="solid" border-left-width="thin" border-right-style="solid" border-right-width="medium">
-								<fo:block></fo:block>
+							<fo:table-cell  display-align="after" border-top-style="solid" border-top-width="thin" border-left-style="solid" border-left-width="thin" border-bottom-style="solid" border-bottom-width="medium" border-right-style="solid" border-right-width="medium">
+								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
 						</fo:table-row>
 						<fo:table-row height="19.5pt">
 							<fo:table-cell >
-								<fo:block></fo:block>
+								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
 							<fo:table-cell >
-								<fo:block></fo:block>
+								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
 							<fo:table-cell >
-								<fo:block></fo:block>
+								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
 							<fo:table-cell >
-								<fo:block></fo:block>
+								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
 							<fo:table-cell >
-								<fo:block></fo:block>
+								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
 							<fo:table-cell >
-								<fo:block></fo:block>
+								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
 						</fo:table-row>
 					</fo:table-body>
