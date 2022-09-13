@@ -2,36 +2,35 @@ package exeltoxslfo;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Base64;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-import org.apache.log4j.Logger;
-import org.apache.poi.ss.usermodel.BorderStyle;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.CellValue;
 import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.FormulaEvaluator;
-import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.PrintSetup;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.util.Units;
-import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFClientAnchor;
-import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFDrawing;
-import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFPicture;
-import org.apache.poi.xssf.usermodel.XSSFPictureData;
 import org.apache.poi.xssf.usermodel.XSSFShape;
+
+import net.arnx.jsonic.JSON;
 
 /**
  * Excelシートから、それらしいXSL-FOファイルを作成します。
@@ -45,8 +44,8 @@ public class ExcelToXSLFO {
 	/**
 	 * Logger.
 	 */
-	private static Logger logger = Logger.getLogger(ExcelToXSLFO.class);
-	
+	private static Logger logger = LogManager.getLogger(ExcelToXSLFO.class);
+
 	/**
 	 * Excel形式の入力ファイルのパス。
 	 */
@@ -56,13 +55,24 @@ public class ExcelToXSLFO {
 	 * シートインデックス。
 	 */
 	private int sheetIndex = 0;
-	
+
 	/**
 	 * XSL-FO:形式の出力ファイルのパス。
 	 */
 	private String xslFoFile = null;
-	
-	
+
+	/**
+	 * イメージフィールドに対応した画像タグ。
+	 */
+	private StringBuilder vImageList = null;
+
+	/**
+	 * コンストラクタ。
+	 */
+	public ExcelToXSLFO() {
+		this.vImageList = new StringBuilder();
+	}
+
 	/**
 	 * Excelファイルのパスを取得します。
 	 * @return Excelファイルのパス。
@@ -110,14 +120,14 @@ public class ExcelToXSLFO {
 	public void setXslFoFile(final String xslFoFile) {
 		this.xslFoFile = xslFoFile;
 	}
-	
+
 	/**
 	 * 引数指定の例外。
 	 *
 	 */
 	private class ArgException extends Exception {
-		
-	};
+
+	}
 
 	/**
 	 * コマンドラインを解析します。
@@ -148,7 +158,7 @@ public class ExcelToXSLFO {
 			throw new ArgException();
 		}
 	}
-	
+
 	/**
 	 * 指定されたWorkbookを取得します。
 	 * @return Workbook。
@@ -165,485 +175,7 @@ public class ExcelToXSLFO {
 		return ret;
 	}
 
-	/**
-	 * セル情報クラス。
-	 *
-	 */
-	private class CellInfo {
-		/**
-		 * ワークブック。
-		 */
-		private Workbook workbook = null;
-		
-		/**
-		 * セルのスタイル情報。
-		 */
-		private CellStyle style = null;
-		
 
-		/**
-		 * セルのスタイル情報。
-		 */
-		private CellStyle bottomRightStyle = null;
-		
-
-		/**
-		 * 説結合によって表示されないセルを示すフラグ。
-		 */
-		private boolean hidden = false;
-		
-		/**
-		 * Row spanの値。
-		 */
-		private int rowSpan = -1;
-		
-		/**
-		 * Column spanの値。
-		 */
-		private int columnSpan = -1;
-
-		/**
-		 * セルの値。
-		 */
-		private String value = null;
-		
-		/**
-		 * セルタイプ。
-		 */
-		private CellType cellType = null;
-		
-		/**
-		 * ワークブック。
-		 * @param wb ワークブック。
-		 */
-		public CellInfo(final Workbook wb) {
-			this.workbook = wb;
-		}
-		
-		/**
-		 * Column spanの値を取得します。
-		 * @return Column spanの値
-		 */
-		public int getColumnSpan() {
-			return columnSpan;
-		}
-
-		/**
-		 * Column spanの値を設定します。
-		 * @param columnSpan Column spanの値。
-		 */
-		public void setColumnSpan(final int columnSpan) {
-			this.columnSpan = columnSpan;
-		}
-
-		/**
-		 * Row spanの値を取得します。
-		 * @return Row spanの値。
-		 */
-		public int getRowSpan() {
-			return rowSpan;
-		}
-
-		/**
-		 * Row spanの値を設定します。
-		 * @param rowSpan Row spanの値。
-		 */
-		public void setRowSpan(final int rowSpan) {
-			this.rowSpan = rowSpan;
-		}
-
-		/**
-		 * セル結合によって非表示になったセルを判定します。
-		 * @return 非表示セルの場合true。
-		 */
-		public boolean isHidden() {
-			return hidden;
-		}
-
-		/**
-		 * 非表示セルであることを設定します。
-		 * @param hidden 非表示セルの場合true。
-		 */
-		private void setHidden(final boolean hidden) {
-			this.hidden = hidden;
-		}
-		
-		/**
-		 * セルのアトリビュートを取得します。
-		 * @return セルのアトリビュート文字列。
-		 */
-		public String getCellAttribute() {
-			StringBuilder attrib = new StringBuilder();
-			if (this.getRowSpan() > 1) {
-				attrib.append(" number-rows-spanned=\"" + this.getRowSpan() + "\" ");
-			}
-			if (this.getColumnSpan() >= 0) {
-				attrib.append(" number-columns-spanned=\"" + this.getColumnSpan() + "\" ");
-			}
-			if (this.style != null) {
-				this.getAlignmentAttribute(attrib);
-				this.getFontAttribute(attrib);
-				this.getBackgroundColorAttribute(attrib);
-				this.getBorderAttribute(attrib);
-			}
-			return attrib.toString();
-		}
-
-		/**
-		 * ExcelのBorderStyleをXSL-FOのborder-styleに変換します。
-		 * @param style ExcelのBorderStyle。
-		 * @return XSL-FOのborder-style。
-		 */
-		private String getBorderStyle(final BorderStyle style) {
-			String ret = null;
-			if (style == BorderStyle.HAIR) {
-				ret = "dotted";
-			} else if (style == BorderStyle.DOTTED) {
-				ret = "dotted";
-			} else if (style == BorderStyle.DASH_DOT_DOT) {
-				ret = "dashed";
-			} else if (style == BorderStyle.DASH_DOT) {
-				ret = "dashed";
-			} else if (style == BorderStyle.DASHED) {
-				ret = "dashed";
-			} else if (style == BorderStyle.THIN) {
-				ret = "solid";
-			} else if (style == BorderStyle.MEDIUM_DASH_DOT_DOT) {
-				ret = "dashed";
-			} else if (style == BorderStyle.SLANTED_DASH_DOT) {
-				ret = "dashed";
-			} else if (style == BorderStyle.MEDIUM_DASH_DOT) {
-				ret = "dashed";
-			} else if (style == BorderStyle.MEDIUM_DASHED) {
-				ret = "dashed";
-			} else if (style == BorderStyle.MEDIUM) {
-				ret = "solid";
-			} else if (style == BorderStyle.THICK) {
-				ret = "solid";
-			} else if (style == BorderStyle.DOUBLE) {
-				ret = "double";
-			}
-			return ret;
-		}
-
-		/**
-		 * ExcelのBorderStyleをXSL-FOのborder-widthに変換します。
-		 * @param style ExcelのBorderStyle。
-		 * @return XSL-FOのborder-width。
-		 */
-		private String getBorderWidth(final BorderStyle style) {
-			String ret = null;
-			if (style == BorderStyle.HAIR) {
-				ret = "0.12mm";
-			} else if (style == BorderStyle.DOTTED) {
-				ret = "thin";
-			} else if (style == BorderStyle.DASH_DOT_DOT) {
-				ret = "thin";
-			} else if (style == BorderStyle.DASH_DOT) {
-				ret = "thin";
-			} else if (style == BorderStyle.DASHED) {
-				ret = "thin";
-			} else if (style == BorderStyle.THIN) {
-				ret = "thin";
-			} else if (style == BorderStyle.MEDIUM_DASH_DOT_DOT) {
-				ret = "medium";
-			} else if (style == BorderStyle.SLANTED_DASH_DOT) {
-				ret = "medium";
-			} else if (style == BorderStyle.MEDIUM_DASH_DOT) {
-				ret = "medium";
-			} else if (style == BorderStyle.MEDIUM_DASHED) {
-				ret = "medium";
-			} else if (style == BorderStyle.MEDIUM) {
-				ret = "medium";
-			} else if (style == BorderStyle.THICK) {
-				ret = "thick";
-			} else if (style == BorderStyle.DOUBLE) {
-				ret = "1.2mm";
-			}
-			return ret;
-		}
-
-		
-		/**
-		 * ボーダースタイルのアトリビュートを作成します。
-		 * @param attrib アトリビュートを追加する文字列バッファ。
-		 * @param prop top,bottom,left,rightのいずれかを指定。
-		 * @param style BorderStyle。
-		 */
-		private void getBorderStyleAttribute(final StringBuilder attrib, final String prop, final BorderStyle style) {
-			if (style != BorderStyle.NONE) {
-				attrib.append(" border-" + prop + "-style=\"" + this.getBorderStyle(style) +"\"");
-				attrib.append(" border-" + prop + "-width=\"" + this.getBorderWidth(style) +"\"");
-			}
-		}
-
-		/**
-		 * ボーダーの色アトリビュートを作成します。
-		 * @param attrib アトリビュートを追加する文字列バッファ。
-		 * @param prop top,bottom,left,rightのいずれかを指定。
-		 * @param color ボーダーの色。
-		 */
-		private void getBorderColorAttribute(final StringBuilder attrib, final String prop, final XSSFColor color) {
-			if (color != null) {
-				String cc = color.getARGBHex();
-				if (cc != null) {
-					attrib.append(" " + prop + "=\"#" + cc.substring(2) +"\"");
-				}
-			}
-		}
-		
-		/**
-		 * Border関連のアトリビュートを作成します。
-		 * @param attrib アトリビュートを追加する文字列バッファ。
-		 */
-		private void getBorderAttribute(final StringBuilder attrib) {
-			this.getBorderStyleAttribute(attrib, "top", this.style.getBorderTopEnum());
-			this.getBorderStyleAttribute(attrib, "left", this.style.getBorderLeftEnum());
-			if (this.bottomRightStyle == null) {
-				this.getBorderStyleAttribute(attrib, "bottom", this.style.getBorderBottomEnum());
-				this.getBorderStyleAttribute(attrib, "right", this.style.getBorderRightEnum());
-			} else {
-				this.getBorderStyleAttribute(attrib, "bottom", this.bottomRightStyle.getBorderBottomEnum());
-				this.getBorderStyleAttribute(attrib, "right", this.bottomRightStyle.getBorderRightEnum());
-			}
-			XSSFCellStyle style = (XSSFCellStyle) this.style;
-			this.getBorderColorAttribute(attrib, "border-top-color", style.getTopBorderXSSFColor());
-			this.getBorderColorAttribute(attrib, "border-left-color", style.getLeftBorderXSSFColor());
-			if (this.bottomRightStyle != null) {
-				style = (XSSFCellStyle) this.bottomRightStyle;
-			}
-			this.getBorderColorAttribute(attrib, "border-bottom-color", style.getBottomBorderXSSFColor());
-			this.getBorderColorAttribute(attrib, "border-right-color", style.getRightBorderXSSFColor());
-		}
-		
-		/**
-		 * 背景色のアトリビュートを取得します。
-		 * @param attrib 追加する文字列バッファ。
-		 */
-		public void getBackgroundColorAttribute(final StringBuilder attrib) {
-			XSSFColor c = (XSSFColor) this.style.getFillForegroundColorColor();
-			if (c != null) {
-				String hexcolor = c.getARGBHex();
-				if (hexcolor != null) {
-					attrib.append(" background-color=\"#" + hexcolor.substring(2) + "\" ");
-				}
-			}
-		}
-
-		/**
-		 * フォント関連情報を取得します。
-		 * @param attrib 追加する文字列バッファ。
-		 */
-		public void getFontAttribute(final StringBuilder attrib) {
-			int fidx = this.style.getFontIndex();
-			if (fidx > 0) {
-				Font f = this.workbook.getFontAt((short) fidx);
-				attrib.append(" font-family=\"" + f.getFontName() + "\"");
-				attrib.append(" font-size=\"" + f.getFontHeightInPoints() + "pt\"");
-				XSSFFont xf = (XSSFFont) f;
-				XSSFColor color = xf.getXSSFColor();
-				String hexcolor = color.getARGBHex();
-				attrib.append(" color=\"#" + hexcolor.substring(2) + "\"");
-				if (f.getBold()) {
-					attrib.append(" font-weight=\"bold\"");
-				}
-				if (f.getItalic()) {
-					attrib.append(" font-style=\"italic\"");
-				}
-				byte u = f.getUnderline();
-				if (u == 1) {
-					attrib.append(" text-decoration=\"underline\"");
-				}
-			}
-		}
-
-		/**
-		 * 配置情報の属性を追加します。
-		 * @param attrib 追加する文字列バッファ。
-		 */
-		public void getAlignmentAttribute(final StringBuilder attrib) {
-			if (this.style.getVerticalAlignmentEnum() == VerticalAlignment.TOP) {
-				attrib.append(" display-align=\"before\"");
-			}
-			if (this.style.getVerticalAlignmentEnum() == VerticalAlignment.CENTER) {
-				attrib.append(" display-align=\"center\"");
-			}
-			if (this.style.getVerticalAlignmentEnum() == VerticalAlignment.BOTTOM) {
-				attrib.append(" display-align=\"after\"");
-			}
-			if (this.style.getAlignmentEnum() == HorizontalAlignment.LEFT) {
-				attrib.append(" text-align=\"left\"");
-			} else 	if (this.style.getAlignmentEnum() == HorizontalAlignment.CENTER) {
-				attrib.append(" text-align=\"center\"");
-			} else if (this.style.getAlignmentEnum() == HorizontalAlignment.RIGHT) {
-				attrib.append(" text-align=\"right\"");
-			} else {
-				CellType type = this.getCellType();
-				if (type == CellType.NUMERIC) {
-					attrib.append(" text-align=\"right\"");
-				}
-			}
-		}
-
-		/**
-		 * セルのスタイル情報を設定します。
-		 * @param style セルスタイル。
-		 */
-		public void setStyle(final CellStyle style) {
-			this.style = style;
-		}
-		
-		/**
-		 * セルの右下のスタイルを設定します。
-		 * <pre>
-		 * セルが結合された場合のみ設定。
-		 * </pre>
-		 * @param bottomRightStyle セルの右下のスタイル。
-		 */
-		public void setBottomRightStyle(final CellStyle bottomRightStyle) {
-			this.bottomRightStyle = bottomRightStyle;
-		}
-
-		/**
-		 * セルの値を取得します。
-		 * @return セルの値。
-		 */
-		public String getValue() {
-			return value;
-		}
-
-		/**
-		 * セルの値を設定します。
-		 * @param value セルの値。
-		 */
-		public void setValue(final String value) {
-			this.value = value;
-		}
-
-		/**
-		 * セルタイプを取得します。
-		 * @return セルタイプ。
-		 */
-		public CellType getCellType() {
-			return cellType;
-		}
-
-		/**
-		 * セルタイプを設定します。
-		 * @param cellType セルタイプ。
-		 */
-		public void setCellType(final CellType cellType) {
-			this.cellType = cellType;
-		}
-		
-		
-		
-		
-		/**
-		 * セルのスタイル情報を設定します。
-		 * @return セルスタイル。
-		 */
-		/*
-		public CellStyle getCellStyle() {
-			return this.style;
-		}*/
-		
-		
-		
-	}
-	
-	/**
-	 * 画像情報。
-	 *
-	 */
-	private class ImageInfo {
-		/**
-		 * 画像ファイルの上端の座標(pt)。
-		 */
-		private double top = 0;
-		/**
-		 * 画像ファイルの左端の座標(pt)。
-		 */
-		private double left = 0;
-		
-		/**
-		 * 画像の高さ(pt)。
-		 */
-		private double height = 0;
-		
-		/**
-		 * 画像の幅(pt)。
-		 */
-
-		private double width = 0;
-
-		/**
-		 * 画像データ。
-		 */
-		private XSSFPictureData imageData = null;
-		
-		/**
-		 * コンストラクタ。
-		 * @param top 画像の上端の位置(pt)。
-		 * @param left 画像の左端の位置(pt)。
-		 * @param height 画像の高さ(pt)。
-		 * @param width 画像の幅(pt)。
-		 * @param data 画像データ。
-		 */
-		public ImageInfo(final double top, final double left, final double height, final double width, final XSSFPictureData data) {
-			this.top = top;
-			this.left = left;
-			this.height = height;
-			this.width = width;
-			this.imageData = data;
-			logger.debug("ImageInfo:" + "," + top + "," + left + "," + height + "," + width);
-		}
-		
-		
-		
-		/**
-		 * 画像ファイルの上端の座標(pt)を取得します。
-		 * @return 画像ファイルの上端の座標(pt)。
-		 */
-		public double getTop() {
-			return top;
-		}
-		
-		/**
-		 * 画像ファイルの左端座標(pt)を取得します。
-		 * @return 画像ファイルの左端座標(pt)。
-		 */
-		public double getLeft() {
-			return left;
-		}
-
-		/**
-		 * 画像の高さ(pt)を取得します。
-		 * @return 画像の高さ(pt)。
-		 */
-		public double getHeight() {
-			return height;
-		}
-
-		/**
-		 * 画像の幅(pt)を取得します。
-		 * @return 画像の幅(pt)。
-		 */
-		public double getWidth() {
-			return width;
-		}
-		
-		/**
-		 * Base64形式の画像ソースを取得します。
-		 * @return 画像ソース。
-		 */
-		public String getImageSrc() {
-			String ret = "data:" + this.imageData.getMimeType() + ";base64, ";
-			byte [] img = this.imageData.getData();
-			String encoded = Base64.getEncoder().encodeToString(img);
-			return ret + encoded;
-		}
-	}
 
 	/**
 	 * Excelのテーブル構造を取得します。
@@ -658,17 +190,17 @@ public class ExcelToXSLFO {
 		 * カラムの幅リスト。
 		 */
 		private List<Double> columnWidthList = null;
-		
+
 		/**
 		 * セル情報。
 		 */
 		private CellInfo [][] cellInfo = null;
-		
+
 		/**
 		 * 画像情報。
 		 */
 		private List<ImageInfo> imageList = new ArrayList<ImageInfo>();
-		
+
 		/**
 		 * 指定されたワークブックのテーブル構造情報を作成します。
 		 * @param wb ワークブック。
@@ -678,20 +210,20 @@ public class ExcelToXSLFO {
 			Sheet sh = wb.getSheetAt(getSheetIndex());
 			FormulaEvaluator fe = wb.getCreationHelper().createFormulaEvaluator();
 			int rows = this.getRows(sh);
-			int cols = this.getColums(sh);
+			int cols = this.getColums(sh) + 1;
 			this.cellInfo = new CellInfo[rows][cols];
 			for (int r = 0; r < rows; r++) {
 				for (int c = 0; c < cols; c++) {
-					this.cellInfo[r][c] = new CellInfo(wb);
+					this.cellInfo[r][c] = new CellInfo(wb, r, c);
 					Cell cell = this.getCell(sh, r, c);
 					if (cell != null) {
 						this.cellInfo[r][c].setStyle(cell.getCellStyle());
 						this.cellInfo[r][c].setValue(ExcelToXSLFO.this.getCellValue(cell, fe));
-						if (cell.getCellTypeEnum() == CellType.FORMULA) {
+						if (cell.getCellType() == CellType.FORMULA) {
 							CellValue cv = fe.evaluate(cell);
-							this.cellInfo[r][c].setCellType(cv.getCellTypeEnum());
+							this.cellInfo[r][c].setCellType(cv.getCellType());
 						} else {
-							this.cellInfo[r][c].setCellType(cell.getCellTypeEnum());
+							this.cellInfo[r][c].setCellType(cell.getCellType());
 						}
 					}
 				}
@@ -716,7 +248,7 @@ public class ExcelToXSLFO {
 			}
 		}
 
-		
+
 		/**
 		 * 画像リストを取得します。
 		 * @return 画像リスト。
@@ -738,7 +270,7 @@ public class ExcelToXSLFO {
 			}
 			return ret;
 		}
-		
+
 		/**
 		 * 指定したセルの左端座標(pt)を取得します。
 		 * @param cell セルインデックス。
@@ -752,43 +284,7 @@ public class ExcelToXSLFO {
 			}
 			return ret;
 		}
-		
-		/**
-		 * 付属ファイルの保存ディレクトリを取得します。
-		 * @return 付属ファイルの保存ディレクトリ。
-		 */
-/*		private String getFilesPath() {
-			String files = ExcelToXSLFO.this.getXslFoFile() + ".files";
-			File filesdir = new File(files);
-			if (!filesdir.exists()) {
-				filesdir.mkdirs();
-			}
-			return files;
-		}*/
-		
-		/**
-		 * 画像ファイルを保存します。
-		 * @param pic 画像情報。
-		 * @return 画像ファイルの保存ファイル名。
-		 * @throws Exception 例外。
-		 */
-/*		private String saveImage(final XSSFPicture pic) throws Exception {
-			String filesdir = this.getFilesPath();
-			XSSFPictureData data = pic.getPictureData();
-			byte[] img = data.getData();
-			String type = data.getMimeType();
-			logger.debug("type=" + type);
-			String filename = pic.getShapeName() + "." + type.replaceAll("image/", "");
-			FileOutputStream os = new FileOutputStream(filesdir + File.separatorChar  + pic.getShapeName() + "." + type.replaceAll("image/", ""));
-			try {
-				os.write(img);
-			} finally {
-				os.close();
-			}
-			File dir = new File(filesdir);
-			return dir.getName() + "/" + filename;
-		}*/
-		
+
 		/**
 		 * 指定されたセルを取得します。
 		 * @param sh シート。
@@ -804,7 +300,7 @@ public class ExcelToXSLFO {
 			}
 			return ret;
 		}
-		
+
 		/**
 		 * セル結合情報を取得します。
 		 * @param wb ワークブック。
@@ -835,7 +331,7 @@ public class ExcelToXSLFO {
 				}
 			}
 		}
-		
+
 		/**
 		 * セル情報を取得します。
 		 * @param row 行。
@@ -873,7 +369,7 @@ public class ExcelToXSLFO {
 			}
 			return cols;
 		}
-		
+
 		/**
 		 * Excelのテーブル行の高さの配列を取得します。
 		 * @param wb ワークブック。
@@ -895,7 +391,7 @@ public class ExcelToXSLFO {
 			}
 			return ret;
 		}
-		
+
 		/**
 		 * Excelのテーブルカラムの幅の配列を取得します。
 		 * <pre>
@@ -906,7 +402,7 @@ public class ExcelToXSLFO {
 		 * @return テーブルカラムの幅(単位ポイント)の配列を取得します。
 		 */
 		private List<Double> getWidthList(final Workbook wb, final int cols) {
-			Font f = wb.getFontAt((short) 0);
+			Font f = wb.getFontAt(0);
 			Sheet sh = wb.getSheetAt(getSheetIndex());
 			List<Double> ret = new ArrayList<Double>();
 			for (int i = 0; i < cols; i++) {
@@ -916,7 +412,7 @@ public class ExcelToXSLFO {
 			}
 			return ret;
 		}
-		
+
 
 		/**
 		 * 行の高さリストを取得します。
@@ -933,7 +429,7 @@ public class ExcelToXSLFO {
 		public List<Double> getColumnWidthList() {
 			return columnWidthList;
 		}
-		
+
 		/**
 		 * テーブルの行数を取得します。
 		 * @return テーブルの行数。
@@ -941,7 +437,7 @@ public class ExcelToXSLFO {
 		public int getRows() {
 			return this.rowHeightList.size();
 		}
-		
+
 		/**
 		 * テーブルのカラム数を取得します。
 		 * @return テーブルのカラム数。
@@ -949,7 +445,7 @@ public class ExcelToXSLFO {
 		public int getColumns() {
 			return this.columnWidthList.size();
 		}
-		
+
 		/**
 		 * テーブル幅を取得します。
 		 * @return テーブル幅。
@@ -961,7 +457,7 @@ public class ExcelToXSLFO {
 			}
 			return ret;
 		}
-		
+
 
 		/**
 		 * 指定された行のアトリビュートを取得します。
@@ -985,103 +481,103 @@ public class ExcelToXSLFO {
 		TableInfo ret = new TableInfo(wb);
 		return ret;
 	}
-	
+
 	/**
 	 * XMLのルート開始タグ。
 	 */
-	private static final String XML_ROOT_BEGIN = 
-			"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" + 
+	private static final String XML_ROOT_BEGIN =
+			"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
 			"<fo:root xmlns:fo=\"http://www.w3.org/1999/XSL/Format\" xml:lang=\"ja\">\n";
 	/**
 	 * XMLのメート終了タグ。
 	 */
 	private static final String XML_ROOT_END = "</fo:root>\n";
-	
-	
+
+
 	/**
 	 * ページの開始タグ。
 	 */
-	private static final String PAGE_BEGIN = 
-			"	<fo:page-sequence initial-page-number=\"1\" master-reference=\"PageMaster\" font-family=\"${fontName}\" font-size=\"${fontPoint}pt\">\n" + 
-			"		<fo:flow flow-name=\"xsl-region-body\">\n" + 
+	private static final String PAGE_BEGIN =
+			"	<fo:page-sequence initial-page-number=\"1\" master-reference=\"PageMaster\" font-family=\"${fontName}\" font-size=\"${fontPoint}pt\">\n" +
+			"		<fo:flow flow-name=\"xsl-region-body\">\n" +
 			"			<fo:block  space-before=\"1em\" >\n";
-	
+
 	/**
 	 * ページ終了タグ。
 	 */
-	private static final String PAGE_END = 
-			"			</fo:block>\n" + 
-			"		</fo:flow>\n" + 
-			"	</fo:page-sequence>\n"; 
-	
+	private static final String PAGE_END =
+			"			</fo:block>\n" +
+			"		</fo:flow>\n" +
+			"	</fo:page-sequence>\n";
+
 	/**
 	 * テーブル開始タグ。
 	 */
-	private static final String TABLE_BEGIN = 
-			"				<fo:table inline-progression-dimension=\"${width}pt\" table-layout=\"fixed\">\n"; 
-	
+	private static final String TABLE_BEGIN =
+			"				<fo:table inline-progression-dimension=\"${width}pt\" table-layout=\"fixed\">\n";
+
 	/**
 	 * テーブル終了タグ。
 	 */
-	private static final String TABLE_END = 
-			"				</fo:table>\n"; 
-	
+	private static final String TABLE_END =
+			"				</fo:table>\n";
+
 	/**
 	 * カラム幅設定タグ。
 	 */
-	private static final String COLUMN_WIDTH = 
-			"					<fo:table-column column-number=\"${cidx}\" column-width=\"${width}pt\" />\n"; 
-	
+	private static final String COLUMN_WIDTH =
+			"					<fo:table-column column-number=\"${cidx}\" column-width=\"${width}pt\" />\n";
+
 	/**
 	 * テーブルボディ開始タグ。
 	 */
-	private static final String TABLE_BODY_BEGIN = 
-			"					<fo:table-body>\n"; 
-	
+	private static final String TABLE_BODY_BEGIN =
+			"					<fo:table-body>\n";
+
 	/**
 	 * テーブルボディ終了タグ。
 	 */
-	private static final String TABLE_BODY_END = 
+	private static final String TABLE_BODY_END =
 			"					</fo:table-body>\n";
-	
+
 	/**
 	 * テーブル行開始タグ。
 	 */
-	private static final String TABLE_ROW_BEGIN = 
-			"						<fo:table-row ${attrib}>\n"; 
-	
+	private static final String TABLE_ROW_BEGIN =
+			"						<fo:table-row ${attrib}>\n";
+
 	/**
 	 * テーブル行終了タグ。
 	 */
-	private static final String TABLE_ROW_END = 
-			"						</fo:table-row>\n"; 
-	
+	private static final String TABLE_ROW_END =
+			"						</fo:table-row>\n";
+
 	/**
 	 * セル開始タグ。
 	 */
-	private static final String TABLE_CELL_BEGIN = 
-			"							<fo:table-cell ${attrib}>\n"; 
-	
+	private static final String TABLE_CELL_BEGIN =
+			"							<fo:table-cell ${attrib}>\n";
+
 	/**
 	 * セル終了タグ。
 	 */
-	private static final String TABLE_CELL_END = 
-			"							</fo:table-cell>\n"; 
+	private static final String TABLE_CELL_END =
+			"							</fo:table-cell>\n";
 
 	/**
 	 * セル内容ブロックタグ。
 	 */
-	private static final String TABLE_CELL_BLOCK_BEGIN = 
+	private static final String TABLE_CELL_BLOCK_BEGIN =
 			"								<fo:block margin-left=\"1mm\">";
 
-	
+
 	/**
 	 * セル内容ブロックタグ。
 	 */
-	private static final String TABLE_CELL_BLOCK_END = 
+	private static final String TABLE_CELL_BLOCK_END =
 			"</fo:block>\n";
-	
-	
+
+
 	/**
 	 * セルの値を取得します。
 	 * @param cell セル。
@@ -1091,21 +587,107 @@ public class ExcelToXSLFO {
 	private String getCellValue(final Cell cell, final FormulaEvaluator fe) {
 		DataFormatter fmt = new DataFormatter();
 		String value = "";
-		if (cell.getCellTypeEnum() == CellType.BLANK) {
+		if (cell.getCellType() == CellType.BLANK) {
 			value = "";
-		} else if (cell.getCellTypeEnum() == CellType.STRING) {
+		} else if (cell.getCellType() == CellType.STRING) {
 			value = cell.getStringCellValue();
-		} else if (cell.getCellTypeEnum() == CellType.FORMULA) {
+		} else if (cell.getCellType() == CellType.FORMULA) {
 			value = fmt.formatCellValue(cell, fe);
 		} else {
 			value = fmt.formatCellValue(cell);
 		}
 		return value;
 	}
-	
+
+	/**
+	 * Jsonから変換したMapからの値取得。
+	 * @param info Jsonから変換したMap。
+	 * @param key キー。
+	 * @param dv デフォルト値、
+	 * @return 値。
+	 */
+	protected BigDecimal getBigDecimalValue(final Map<String, Object> info, final String key, final BigDecimal dv) {
+		BigDecimal value = (BigDecimal) info.get(key);
+		if (value == null) {
+			value = dv;
+		}
+		return value;
+
+	}
+
+	/**
+	 * 画像タグを取得します。
+	 * @param tinfo テーブル情報。
+	 * @param cell セル。
+	 * @param ci セル情報。
+	 * @param tag タグ。
+	 * @param json 画像パラメータのJson、
+	 * @return 画像タグ。
+	 */
+	protected String getImageTag(final TableInfo tinfo, final Cell cell, final CellInfo ci, final String tag, final String json) {
+		@SuppressWarnings("unchecked")
+		Map<String, Object> info = (Map<String, Object>) JSON.decode(json, HashMap.class);
+		int r0 = cell.getRowIndex();
+		int c0 = cell.getColumnIndex();
+		BigDecimal rows = this.getBigDecimalValue(info, "rows", BigDecimal.valueOf(1));
+		BigDecimal cols = this.getBigDecimalValue(info, "columns", BigDecimal.valueOf(1));
+		int r1 = r0 + rows.intValue();
+		int c1 = c0 + cols.intValue();
+
+		BigDecimal dx1 = this.getBigDecimalValue(info, "dx1", BigDecimal.valueOf(0));
+		BigDecimal dy1 = this.getBigDecimalValue(info, "dy1", BigDecimal.valueOf(0));
+		BigDecimal dx2 = this.getBigDecimalValue(info, "dx2", BigDecimal.valueOf(0));
+		BigDecimal dy2 = this.getBigDecimalValue(info, "dy2", BigDecimal.valueOf(0));
+
+		double top = tinfo.getTop(r0) + dy1.intValue();
+		double left = tinfo.getLeft(c0) + dx1.intValue();
+		double bottom = tinfo.getTop(r1) + dy2.intValue();
+		double right = tinfo.getLeft(c1) + dx2.intValue();
+		double height = bottom - top + 1;
+		double width = right - left + 1;
+
+		StringBuilder sb = new StringBuilder();
+		String imageBlockBegin = IMAGE_BLOCK_BEGIN;
+		imageBlockBegin = imageBlockBegin.replaceAll("\\$\\{top\\}", "" + top);
+		imageBlockBegin = imageBlockBegin.replaceAll("\\$\\{left\\}", "" + left);
+		imageBlockBegin = imageBlockBegin.replaceAll("\\$\\{height\\}", "" + height);
+		imageBlockBegin = imageBlockBegin.replaceAll("\\$\\{width\\}", "" + width);
+		String aspect = (String) info.get("aspect");
+		String scaling = "non-uniform";
+		if ("image".equals(aspect)) {
+			scaling = "uniform";
+		}
+		sb.append(imageBlockBegin);
+		sb.append("					<fo:block><fo:external-graphic src=\"" + tag + "\" width=\"" + width + "pt\" height=\"" + height + "pt\" content-width=\"" + width + "pt\" content-height=\"" + height + "pt\" border-style=\"dotted\" border-width=\"0mm\" scaling=\"" + scaling + "\"/></fo:block>\n");
+		sb.append(IMAGE_BLOCK_END);
+
+		return sb.toString();
+	}
+
+	/**
+	 * セルの値を取得します。
+	 * <pre>
+	 * セルに画像用のタグがあった場合、画像に展開します。
+	 * </pre>
+	 * @param tinfo テーブル情報。
+	 * @param cell セル。
+	 * @param ci セル情報。
+	 * @return セルの値。
+	 */
+	protected String getCellValue(final TableInfo tinfo, final Cell cell, final CellInfo ci) {
+		Pattern p = Pattern.compile("(\\$\\{.+?\\})(\\{.+?\\})");
+		Matcher m = p.matcher(ci.getValue());
+		if (m.find()) {
+			vImageList.append(this.getImageTag(tinfo, cell, ci, m.group(1), m.group(2)));
+			return "";
+		} else {
+			return ci.getValue();
+		}
+	}
+
 	/**
 	 * 指定された行のテーブルセルのXMLを作成します。
-	 * 
+	 *
 	 * @param wb ワークブック。
 	 * @param tinfo テーブル情報。
 	 * @param r 行インデックス。
@@ -1125,8 +707,7 @@ public class ExcelToXSLFO {
 				if (cell != null) {
 					String cellBegin = TABLE_CELL_BEGIN.replaceAll("\\$\\{attrib\\}", ci.getCellAttribute());
 					sb.append(cellBegin);
-//					String value = this.getCellValue(cell);
-					String value = ci.getValue();
+					String value = this.getCellValue(tinfo, cell, ci);
 					sb.append(TABLE_CELL_BLOCK_BEGIN);
 					sb.append(value);
 					sb.append(TABLE_CELL_BLOCK_END);
@@ -1154,9 +735,10 @@ public class ExcelToXSLFO {
 				sb.append(TABLE_CELL_END);
 			}
 		}
-		return sb.toString();
+		String ret = sb.toString();
+		return ret;
 	}
-	
+
 	/**
 	 * テーブルのXMLを作成します。
 	 * @param wb ワークブック。
@@ -1165,7 +747,7 @@ public class ExcelToXSLFO {
 	 */
 	private String getTableXml(final Workbook wb, final TableInfo tinfo) {
 		StringBuilder sb = new StringBuilder();
-		String tblbegin = TABLE_BEGIN.replaceAll("\\$\\{width\\}", "" + tinfo.getTableWidth()); 
+		String tblbegin = TABLE_BEGIN.replaceAll("\\$\\{width\\}", "" + tinfo.getTableWidth());
 		sb.append(tblbegin);
 		for (int i = 0; i < tinfo.getColumns(); i++) {
 			String colinfo = COLUMN_WIDTH.replaceAll("\\$\\{width\\}", "" + tinfo.getColumnWidthList().get(i).doubleValue());
@@ -1175,26 +757,27 @@ public class ExcelToXSLFO {
 		sb.append(TABLE_BODY_BEGIN);
 		for (int r = 0; r < tinfo.getRows(); r++) {
 			String attrib = tinfo.getRowAttribute(r);
+			String cells = this.getTableCellsXml(wb, tinfo, r);
 			String tableRowBegin = TABLE_ROW_BEGIN.replaceAll("\\$\\{attrib\\}", attrib);
 			sb.append(tableRowBegin);
-			sb.append(this.getTableCellsXml(wb, tinfo, r));
+			sb.append(cells);
 			sb.append(TABLE_ROW_END);
 		}
 		sb.append(TABLE_BODY_END);
 		sb.append(TABLE_END);
 		return sb.toString();
 	}
-	
+
 	/**
 	 * 画像位置指定ブロック開始。
 	 */
-	private static final String IMAGE_BLOCK_BEGIN = 
+	private static final String IMAGE_BLOCK_BEGIN =
 			"				<fo:block-container position=\"absolute\" top=\"${top}pt\" left=\"${left}pt\" width=\"${width}pt\" height=\"${height}pt\">\n";
-	
+
 	/**
 	 * 画像位置指定ブロック終了。
 	 */
-	private static final String IMAGE_BLOCK_END = 
+	private static final String IMAGE_BLOCK_END =
 			"				</fo:block-container>\n";
 
 	/**
@@ -1216,19 +799,19 @@ public class ExcelToXSLFO {
 		}
 		return sb.toString();
 	}
-	
-	
+
+
 	/**
 	 * A4縦用のページマスタ。
 	 */
 	private static final String PAGE_MASTER =
-			"	<fo:layout-master-set>\n" + 
-			"		<fo:simple-page-master page-height=\"${width}\" page-width=\"${height}\" margin-top=\"0mm\" margin-left=\"0mm\" margin-right=\"0mm\" margin-bottom=\"0mm\" master-name=\"PageMaster\">\n" + 
-			"			<fo:region-body margin-top=\"${topMargin}pt\" margin-left=\"${leftMargin}pt\" margin-right=\"${rightMargin}pt\" margin-bottom=\"${bottomMargin}pt\"/>\n" + 
-			"		</fo:simple-page-master>\n" + 
-			"	</fo:layout-master-set>\n"; 
+			"	<fo:layout-master-set>\n" +
+			"		<fo:simple-page-master page-height=\"${width}\" page-width=\"${height}\" margin-top=\"0mm\" margin-left=\"0mm\" margin-right=\"0mm\" margin-bottom=\"0mm\" master-name=\"PageMaster\">\n" +
+			"			<fo:region-body margin-top=\"${topMargin}pt\" margin-left=\"${leftMargin}pt\" margin-right=\"${rightMargin}pt\" margin-bottom=\"${bottomMargin}pt\"/>\n" +
+			"		</fo:simple-page-master>\n" +
+			"	</fo:layout-master-set>\n";
 
-	
+
 	/**
 	 * ページマスタを取得します。
 	 * @param height ページの高さ。
@@ -1247,7 +830,7 @@ public class ExcelToXSLFO {
 		}
 		return pageMaster;
 	}
-	
+
 	/**
 	 * ページマスタを取得します。
 	 * @param wb ワークブック。
@@ -1290,7 +873,7 @@ public class ExcelToXSLFO {
 		pageMaster = pageMaster.replaceAll("\\$\\{rightMargin\\}", "" + rightMargin);
 		sb.append(pageMaster);
 	}
-	
+
 	/**
 	 * XSL-FO形式のXMLを取得します。
 	 * @param wb ワークブック。
@@ -1301,18 +884,19 @@ public class ExcelToXSLFO {
 		StringBuilder sb = new StringBuilder();
 		sb.append(XML_ROOT_BEGIN);
 		this.getPageMaster(wb, sb);
-		Font f = wb.getFontAt((short) 0);
+		Font f = wb.getFontAt(0);
 		String pageBegin = PAGE_BEGIN;
 		pageBegin = pageBegin.replaceAll("\\$\\{fontName\\}", f.getFontName());
 		pageBegin = pageBegin.replaceAll("\\$\\{fontPoint\\}", "" + f.getFontHeightInPoints());
 		sb.append(pageBegin);
-		sb.append(this.getImageXml(tinfo));
 		sb.append(this.getTableXml(wb, tinfo));
+		sb.append(this.getImageXml(tinfo));
+		sb.append(this.vImageList.toString());
 		sb.append(PAGE_END);
 		sb.append(XML_ROOT_END);
 		return sb.toString();
 	}
-	
+
 	/**
 	 * ExcelファイルからXSL-FO形式のXMLを作成します。
 	 * @return XSL-FO形式の文字列。
@@ -1333,10 +917,10 @@ public class ExcelToXSLFO {
 		}
 		return xml;
 	}
-	
+
 	/**
 	 * メイン処理。
-	 * 
+	 *
 	 * @param args コマンドライン引数。
 	 */
 	public static void main(final String[] args) {

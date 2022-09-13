@@ -8,19 +8,14 @@
 	<fo:page-sequence initial-page-number="1" master-reference="PageMaster" font-family="游ゴシック" font-size="11pt">
 		<fo:flow flow-name="xsl-region-body">
 			<fo:block  space-before="1em" >
-				<fo:block-container position="absolute" top="99.25pt" left="326.37pt" width="25.0pt" height="25.0pt">
-					<fo:block><fo:external-graphic src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAIAAAD8GO2jAAAAAXNSR0IArs4c6QAAAAlwSFlzAAAOwgAADsIBFShKgAAAANRJREFUSEvtVjEOhCAQ1Iu8QBIoKMAQaPz/LwwWFmiIlY0JxgdocSZHzmsu1yxcYuQBM9mZ2Vnytm33fc/ivKIo8qZptm2Lg58hhB6RoN+wYYK+79d1BSSjlHLOjwkCgTFmnmdAAiGE1jqFRKk8sNaCe3CodHoAqP4nVAoPQoqcc957wDkwxlLKU6Ku66ZpAiRgjNV1nUKiVDEdhgHcA6XUlWIaXaI7pt9XNFVVAJbEn9r0OPqwN5kQ8rrJwYM7pj9jOo7jsiyAWSrLsqqqa7Rp7O/7E8mnruXTzGDiAAAAAElFTkSuQmCC" width="25.0pt" height="25.0pt" content-width="25.0pt" content-height="25.0pt" border-style="dotted" border-width="thin"/></fo:block>
-				</fo:block-container>
-				<fo:block-container position="absolute" top="181.75pt" left="294.37pt" width="119.24000000000001pt" height="116.75pt">
-					<fo:block><fo:external-graphic src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAIAAAD8GO2jAAAAAXNSR0IArs4c6QAAAAlwSFlzAAAOwgAADsIBFShKgAAAANRJREFUSEvtVjEOhCAQ1Iu8QBIoKMAQaPz/LwwWFmiIlY0JxgdocSZHzmsu1yxcYuQBM9mZ2Vnytm33fc/ivKIo8qZptm2Lg58hhB6RoN+wYYK+79d1BSSjlHLOjwkCgTFmnmdAAiGE1jqFRKk8sNaCe3CodHoAqP4nVAoPQoqcc957wDkwxlLKU6Ku66ZpAiRgjNV1nUKiVDEdhgHcA6XUlWIaXaI7pt9XNFVVAJbEn9r0OPqwN5kQ8rrJwYM7pj9jOo7jsiyAWSrLsqqqa7Rp7O/7E8mnruXTzGDiAAAAAElFTkSuQmCC" width="119.24000000000001pt" height="116.75pt" content-width="119.24000000000001pt" content-height="116.75pt" border-style="dotted" border-width="thin"/></fo:block>
-				</fo:block-container>
-				<fo:table inline-progression-dimension="527.4499999999999pt" table-layout="fixed">
+				<fo:table inline-progression-dimension="576.7299999999999pt" table-layout="fixed">
 					<fo:table-column column-number="1" column-width="167.09pt" />
 					<fo:table-column column-number="2" column-width="126.28pt" />
 					<fo:table-column column-number="3" column-width="86.24000000000001pt" />
 					<fo:table-column column-number="4" column-width="49.28pt" />
 					<fo:table-column column-number="5" column-width="49.28pt" />
 					<fo:table-column column-number="6" column-width="49.28pt" />
+					<fo:table-column column-number="7" column-width="49.28pt" />
 					<fo:table-body>
 						<fo:table-row height="18.75pt">
 							<fo:table-cell  number-rows-spanned="2"  number-columns-spanned="2"  display-align="before" text-align="center" font-family="HGP行書体" font-size="16pt" color="#FF0000">
@@ -38,10 +33,16 @@
 							<fo:table-cell >
 								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
+							<fo:table-cell >
+								<fo:block margin-left="1mm"></fo:block>
+							</fo:table-cell>
 						</fo:table-row>
 						<fo:table-row height="18.75pt">
 							<fo:table-cell  display-align="after">
 								<fo:block margin-left="1mm"> </fo:block>
+							</fo:table-cell>
+							<fo:table-cell >
+								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
 							<fo:table-cell >
 								<fo:block margin-left="1mm"></fo:block>
@@ -72,13 +73,19 @@
 							<fo:table-cell >
 								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
+							<fo:table-cell >
+								<fo:block margin-left="1mm"></fo:block>
+							</fo:table-cell>
 						</fo:table-row>
 						<fo:table-row height="105.0pt">
 							<fo:table-cell  display-align="before" text-align="center">
 								<fo:block margin-left="1mm">項目2</fo:block>
 							</fo:table-cell>
-							<fo:table-cell  display-align="after" font-family="游ゴシック" font-size="11pt" color="#000000" font-weight="bold" font-style="italic" text-decoration="underline" background-color="#FFFF00" >
+							<fo:table-cell  display-align="after" font-family="游ゴシック" font-size="11pt" color="#000000" font-weight="bold" font-style="italic" text-decoration="underline" background-color="#ffff00" >
 								<fo:block margin-left="1mm">aaaa</fo:block>
+							</fo:table-cell>
+							<fo:table-cell >
+								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
 							<fo:table-cell >
 								<fo:block margin-left="1mm"></fo:block>
@@ -112,6 +119,9 @@
 							<fo:table-cell >
 								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
+							<fo:table-cell >
+								<fo:block margin-left="1mm"></fo:block>
+							</fo:table-cell>
 						</fo:table-row>
 						<fo:table-row height="96.0pt">
 							<fo:table-cell  display-align="center" text-align="left">
@@ -132,10 +142,16 @@
 							<fo:table-cell >
 								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
+							<fo:table-cell >
+								<fo:block margin-left="1mm"></fo:block>
+							</fo:table-cell>
 						</fo:table-row>
 						<fo:table-row height="18.75pt">
 							<fo:table-cell  display-align="after">
 								<fo:block margin-left="1mm">12345678</fo:block>
+							</fo:table-cell>
+							<fo:table-cell >
+								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
 							<fo:table-cell >
 								<fo:block margin-left="1mm"></fo:block>
@@ -172,6 +188,9 @@
 							<fo:table-cell >
 								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
+							<fo:table-cell >
+								<fo:block margin-left="1mm"></fo:block>
+							</fo:table-cell>
 						</fo:table-row>
 						<fo:table-row height="18.75pt">
 							<fo:table-cell  display-align="after" border-top-style="dotted" border-top-width="0.12mm" border-bottom-style="dotted" border-bottom-width="thin">
@@ -179,6 +198,9 @@
 							</fo:table-cell>
 							<fo:table-cell  display-align="after" text-align="right">
 								<fo:block margin-left="1mm">2018/8/30 20:20</fo:block>
+							</fo:table-cell>
+							<fo:table-cell >
+								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
 							<fo:table-cell >
 								<fo:block margin-left="1mm"></fo:block>
@@ -212,6 +234,9 @@
 							<fo:table-cell >
 								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
+							<fo:table-cell >
+								<fo:block margin-left="1mm"></fo:block>
+							</fo:table-cell>
 						</fo:table-row>
 						<fo:table-row height="19.5pt">
 							<fo:table-cell  display-align="after" border-top-style="dashed" border-top-width="thin" border-bottom-style="dashed" border-bottom-width="thin">
@@ -219,6 +244,9 @@
 							</fo:table-cell>
 							<fo:table-cell  display-align="after" text-align="right">
 								<fo:block margin-left="1mm">1000000</fo:block>
+							</fo:table-cell>
+							<fo:table-cell >
+								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
 							<fo:table-cell >
 								<fo:block margin-left="1mm"></fo:block>
@@ -252,6 +280,9 @@
 							<fo:table-cell  display-align="after" border-top-style="solid" border-top-width="medium" border-left-style="solid" border-left-width="thin" border-bottom-style="double" border-bottom-width="1.2mm" border-right-style="solid" border-right-width="medium">
 								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
+							<fo:table-cell >
+								<fo:block margin-left="1mm"></fo:block>
+							</fo:table-cell>
 						</fo:table-row>
 						<fo:table-row height="19.5pt">
 							<fo:table-cell  display-align="after" border-bottom-style="solid" border-bottom-width="thin">
@@ -270,6 +301,9 @@
 								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
 							<fo:table-cell  display-align="after" border-left-style="solid" border-left-width="thin" border-bottom-style="solid" border-bottom-width="thin" border-right-style="solid" border-right-width="medium">
+								<fo:block margin-left="1mm"></fo:block>
+							</fo:table-cell>
+							<fo:table-cell >
 								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
 						</fo:table-row>
@@ -292,6 +326,9 @@
 							<fo:table-cell  display-align="after" border-top-style="solid" border-top-width="thin" border-left-style="solid" border-left-width="thin" border-bottom-style="solid" border-bottom-width="thin" border-right-style="solid" border-right-width="medium">
 								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
+							<fo:table-cell >
+								<fo:block margin-left="1mm"></fo:block>
+							</fo:table-cell>
 						</fo:table-row>
 						<fo:table-row height="19.5pt">
 							<fo:table-cell  display-align="after" text-align="right" border-top-style="dashed" border-top-width="medium" border-bottom-style="dashed" border-bottom-width="medium">
@@ -310,6 +347,9 @@
 								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
 							<fo:table-cell  display-align="after" border-top-style="solid" border-top-width="thin" border-left-style="solid" border-left-width="thin" border-bottom-style="solid" border-bottom-width="thin" border-right-style="solid" border-right-width="medium">
+								<fo:block margin-left="1mm"></fo:block>
+							</fo:table-cell>
+							<fo:table-cell >
 								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
 						</fo:table-row>
@@ -332,6 +372,9 @@
 							<fo:table-cell  display-align="after" border-top-style="solid" border-top-width="thin" border-left-style="solid" border-left-width="thin" border-bottom-style="solid" border-bottom-width="thin" border-right-style="solid" border-right-width="medium">
 								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
+							<fo:table-cell >
+								<fo:block margin-left="1mm"></fo:block>
+							</fo:table-cell>
 						</fo:table-row>
 						<fo:table-row height="19.5pt">
 							<fo:table-cell  display-align="after" text-align="right" border-top-style="dashed" border-top-width="medium" border-bottom-style="dashed" border-bottom-width="medium">
@@ -350,6 +393,9 @@
 								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
 							<fo:table-cell  display-align="after" border-top-style="solid" border-top-width="thin" border-left-style="solid" border-left-width="thin" border-bottom-style="solid" border-bottom-width="thin" border-right-style="solid" border-right-width="medium">
+								<fo:block margin-left="1mm"></fo:block>
+							</fo:table-cell>
+							<fo:table-cell >
 								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
 						</fo:table-row>
@@ -372,6 +418,9 @@
 							<fo:table-cell  display-align="after" border-top-style="solid" border-top-width="thin" border-left-style="solid" border-left-width="thin" border-bottom-style="solid" border-bottom-width="thin" border-right-style="solid" border-right-width="medium">
 								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
+							<fo:table-cell >
+								<fo:block margin-left="1mm"></fo:block>
+							</fo:table-cell>
 						</fo:table-row>
 						<fo:table-row height="19.5pt">
 							<fo:table-cell  display-align="after" text-align="right" border-top-style="solid" border-top-width="medium" border-bottom-style="solid" border-bottom-width="thick">
@@ -390,6 +439,9 @@
 								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
 							<fo:table-cell  display-align="after" border-top-style="solid" border-top-width="thin" border-left-style="solid" border-left-width="thin" border-bottom-style="solid" border-bottom-width="thin" border-right-style="solid" border-right-width="medium">
+								<fo:block margin-left="1mm"></fo:block>
+							</fo:table-cell>
+							<fo:table-cell >
 								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
 						</fo:table-row>
@@ -412,8 +464,14 @@
 							<fo:table-cell  display-align="after" border-top-style="solid" border-top-width="thin" border-left-style="solid" border-left-width="thin" border-bottom-style="solid" border-bottom-width="medium" border-right-style="solid" border-right-width="medium">
 								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
+							<fo:table-cell >
+								<fo:block margin-left="1mm"></fo:block>
+							</fo:table-cell>
 						</fo:table-row>
 						<fo:table-row height="19.5pt">
+							<fo:table-cell >
+								<fo:block margin-left="1mm"></fo:block>
+							</fo:table-cell>
 							<fo:table-cell >
 								<fo:block margin-left="1mm"></fo:block>
 							</fo:table-cell>
@@ -435,6 +493,12 @@
 						</fo:table-row>
 					</fo:table-body>
 				</fo:table>
+				<fo:block-container position="absolute" top="99.25pt" left="326.37pt" width="25.0pt" height="25.0pt">
+					<fo:block><fo:external-graphic src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAIAAAD8GO2jAAAAAXNSR0IArs4c6QAAAAlwSFlzAAAOwgAADsIBFShKgAAAANRJREFUSEvtVjEOhCAQ1Iu8QBIoKMAQaPz/LwwWFmiIlY0JxgdocSZHzmsu1yxcYuQBM9mZ2Vnytm33fc/ivKIo8qZptm2Lg58hhB6RoN+wYYK+79d1BSSjlHLOjwkCgTFmnmdAAiGE1jqFRKk8sNaCe3CodHoAqP4nVAoPQoqcc957wDkwxlLKU6Ku66ZpAiRgjNV1nUKiVDEdhgHcA6XUlWIaXaI7pt9XNFVVAJbEn9r0OPqwN5kQ8rrJwYM7pj9jOo7jsiyAWSrLsqqqa7Rp7O/7E8mnruXTzGDiAAAAAElFTkSuQmCC" width="25.0pt" height="25.0pt" content-width="25.0pt" content-height="25.0pt" border-style="dotted" border-width="thin"/></fo:block>
+				</fo:block-container>
+				<fo:block-container position="absolute" top="181.75pt" left="294.37pt" width="119.24000000000001pt" height="116.75pt">
+					<fo:block><fo:external-graphic src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAIAAAD8GO2jAAAAAXNSR0IArs4c6QAAAAlwSFlzAAAOwgAADsIBFShKgAAAANRJREFUSEvtVjEOhCAQ1Iu8QBIoKMAQaPz/LwwWFmiIlY0JxgdocSZHzmsu1yxcYuQBM9mZ2Vnytm33fc/ivKIo8qZptm2Lg58hhB6RoN+wYYK+79d1BSSjlHLOjwkCgTFmnmdAAiGE1jqFRKk8sNaCe3CodHoAqP4nVAoPQoqcc957wDkwxlLKU6Ku66ZpAiRgjNV1nUKiVDEdhgHcA6XUlWIaXaI7pt9XNFVVAJbEn9r0OPqwN5kQ8rrJwYM7pj9jOo7jsiyAWSrLsqqqa7Rp7O/7E8mnruXTzGDiAAAAAElFTkSuQmCC" width="119.24000000000001pt" height="116.75pt" content-width="119.24000000000001pt" content-height="116.75pt" border-style="dotted" border-width="thin"/></fo:block>
+				</fo:block-container>
 			</fo:block>
 		</fo:flow>
 	</fo:page-sequence>
