@@ -919,6 +919,21 @@ public class ExcelToXSLFO {
 	}
 
 	/**
+	 * 変換処理を行います。
+	 * @param excel Excelファイル名。
+	 * @param sheetIndex シートインデックス。
+	 * @param fop FOPファイル名。
+	 * @throws Exception 例外。
+	 */
+	public static void convert(final String excel, final int sheetIndex, final String fop) throws Exception {
+		ExcelToXSLFO conv = new ExcelToXSLFO();
+		conv.setExcelFile(excel);
+		conv.setSheetIndex(sheetIndex);
+		conv.setXslFoFile(fop);
+		conv.convert();
+	}
+
+	/**
 	 * メイン処理。
 	 *
 	 * @param args コマンドライン引数。

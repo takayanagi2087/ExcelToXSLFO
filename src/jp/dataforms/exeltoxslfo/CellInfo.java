@@ -294,10 +294,12 @@ public class CellInfo {
 		logger.debug("cidx=" + cidx);
 		if (c != null) {
 			byte[] rgb = c.getRGBWithTint();
-			String hexcolor = String.format("%02x", rgb[0]) + String.format("%02x", rgb[1]) + String.format("%02x", rgb[2]);
-			if (hexcolor != null) {
-				logger.debug("row,col=(" + this.row + "," + this.column + "), hexcolor=" + hexcolor + ", cidx=" + cidx);
-				attrib.append(" background-color=\"#" + hexcolor + "\" ");
+			if (rgb != null) {
+				String hexcolor = String.format("%02x", rgb[0]) + String.format("%02x", rgb[1]) + String.format("%02x", rgb[2]);
+				if (hexcolor != null) {
+					logger.debug("row,col=(" + this.row + "," + this.column + "), hexcolor=" + hexcolor + ", cidx=" + cidx);
+					attrib.append(" background-color=\"#" + hexcolor + "\" ");
+				}
 			}
 		}
 	}
@@ -310,21 +312,25 @@ public class CellInfo {
 		int fidx = this.style.getFontIndex();
 		if (fidx > 0) {
 			Font f = this.workbook.getFontAt(fidx);
-			attrib.append(" font-family=\"" + f.getFontName() + "\"");
-			attrib.append(" font-size=\"" + f.getFontHeightInPoints() + "pt\"");
-			XSSFFont xf = (XSSFFont) f;
-			XSSFColor color = xf.getXSSFColor();
-			String hexcolor = color.getARGBHex();
-			attrib.append(" color=\"#" + hexcolor.substring(2) + "\"");
-			if (f.getBold()) {
-				attrib.append(" font-weight=\"bold\"");
-			}
-			if (f.getItalic()) {
-				attrib.append(" font-style=\"italic\"");
-			}
-			byte u = f.getUnderline();
-			if (u == 1) {
-				attrib.append(" text-decoration=\"underline\"");
+			if (f != null) {
+				attrib.append(" font-family=\"" + f.getFontName() + "\"");
+				attrib.append(" font-size=\"" + f.getFontHeightInPoints() + "pt\"");
+				XSSFFont xf = (XSSFFont) f;
+				XSSFColor color = xf.getXSSFColor();
+				if (color != null) {
+					String hexcolor = color.getARGBHex();
+					attrib.append(" color=\"#" + hexcolor.substring(2) + "\"");
+					if (f.getBold()) {
+						attrib.append(" font-weight=\"bold\"");
+					}
+					if (f.getItalic()) {
+						attrib.append(" font-style=\"italic\"");
+					}
+					byte u = f.getUnderline();
+					if (u == 1) {
+						attrib.append(" text-decoration=\"underline\"");
+					}
+				}
 			}
 		}
 	}
