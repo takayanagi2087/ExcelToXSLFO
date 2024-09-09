@@ -30,7 +30,7 @@ import org.apache.poi.xssf.usermodel.XSSFDrawing;
 import org.apache.poi.xssf.usermodel.XSSFPicture;
 import org.apache.poi.xssf.usermodel.XSSFShape;
 
-import net.arnx.jsonic.JSON;
+import com.google.gson.Gson;
 
 /**
  * Excelシートから、それらしいXSL-FOファイルを作成します。
@@ -625,8 +625,11 @@ public class ExcelToXSLFO {
 	 * @return 画像タグ。
 	 */
 	protected String getImageTag(final TableInfo tinfo, final Cell cell, final CellInfo ci, final String tag, final String json) {
+//		@SuppressWarnings("unchecked")
+//		Map<String, Object> info = (Map<String, Object>) JSON.decode(json, HashMap.class);
+		Gson gson = new Gson();
 		@SuppressWarnings("unchecked")
-		Map<String, Object> info = (Map<String, Object>) JSON.decode(json, HashMap.class);
+		Map<String, Object> info = (Map<String, Object>) gson.fromJson(json, HashMap.class);
 		int r0 = cell.getRowIndex();
 		int c0 = cell.getColumnIndex();
 		BigDecimal rows = this.getBigDecimalValue(info, "rows", BigDecimal.valueOf(1));
